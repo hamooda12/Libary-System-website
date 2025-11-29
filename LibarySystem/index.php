@@ -1,3 +1,7 @@
+<?php
+include '../classes/author.php';
+$allAuthors = JSON_ENCODE($getALlAuthors);// عشان أبعتهم للجافا سكريبت
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -508,6 +512,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    const allAuthors = <?php echo $allAuthors; ?>;
+    console.log(allAuthors); </script>
 <script src="../assets/js/Main.js"></script>
 </body>
 </html>

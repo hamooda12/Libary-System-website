@@ -162,34 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function attachFormHandler(formId) {
-        const form = document.getElementById(formId);
-        if (!form) return;
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-            const dataObj = {};
-            formData.forEach((value, key) => {
-                dataObj[key] = value;
-            });
-
-            console.log('Form submitted:', formId);
-            console.log('Data:', dataObj);
-
-            alert('Demo only: form "' + formId + '" submitted (check console).');
-        });
-    }
-
-    attachFormHandler('formBookInsert');
-    attachFormHandler('formAuthorInsert');
-    attachFormHandler('formPublisherInsert');
-    attachFormHandler('formBorrowerInsert');
-    attachFormHandler('formLoanInsert');
-    attachFormHandler('formSaleInsert');
-
-    const tableBooks = document.getElementById('tableBooks');
+       const tableBooks = document.getElementById('tableBooks');
     if (tableBooks) {
         const tbody = tableBooks.querySelector('tbody');
         if (tbody) {
@@ -211,12 +184,31 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${book.price.toFixed(2)}</td>
                     <td>${book.available ? 'Yes' : 'No'}</td>
                     <td class="admin-only">
-                        <button class="btn btn-sm btn-warning me-1 btn-edit">Edit</button>
+                        <button class="btn btn-sm btn-warning me-1 btn-edit" onAction=''>Edit</button>
                         <button class="btn btn-sm btn-danger btn-delete">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
+            document.querySelectorAll(".btn-edit").forEach(btn => {
+    btn.addEventListener("click", function() {
+        let row = this.closest("tr");
+        let first_name = row.querySelector(".first_name").innerText;
+        let last_name = row.querySelector(".last_name").innerText;
+        let country = row.querySelector(".country").innerText;
+        let bio = row.querySelector(".bio").innerText;
+
+        row.querySelector(".first_name").innerHTML = `<input type="text" value="${first_name}" class="editName">`;
+        row.querySelector(".last_name").innerHTML = `<input type="text" value="${last_name}" class="editEmail">`;
+        row.querySelector(".country").innerHTML = `<input type="text" value="${country}" class="editName">`;
+        row.querySelector(".bio").innerHTML = `<input type="text" value="${bio}" class="editEmail">`;
+
+        row.querySelector(".btn-edit").style.display = "none";
+        row.querySelector(".saveBtn").style.display = "inline-block";
+        row.querySelector(".cancelBtn").style.display = "inline-block";
+    });
+});
+
         }
     }
 
@@ -224,21 +216,17 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tableAuthors) {
         const tbody = tableAuthors.querySelector('tbody');
         if (tbody) {
-            const demoAuthors = [
-                { id: 1, first: 'Omar', last: 'Khaled', country: 'Egypt', bio: 'Specialist in classical Arabic literature.' },
-                { id: 3, first: 'Ahmed', last: 'Mansour', country: 'Palestine', bio: 'Researcher in Middle Eastern history.' },
-                { id: 5, first: 'George', last: 'Smith', country: 'USA', bio: 'Author of science fiction novels.' }
-            ];
+            const demoAuthors = allAuthors;
 
             tbody.innerHTML = '';
             demoAuthors.forEach(a => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${a.id}</td>
-                    <td>${a.first}</td>
-                    <td>${a.last}</td>
-                    <td>${a.country}</td>
-                    <td>${a.bio}</td>
+                    <td><span class="author_id">${a.author_id}</span></td>
+                    <td><span class="first_name">${a.first_name}</span></td>
+                    <td><span class="last_name">${a.last_name}</span></td>
+                    <td><span class="country">${a.country}</span></td>
+                    <td><span class="bio">${a.bio}</span></td>
                     <td class="admin-only">
                         <button class="btn btn-sm btn-warning me-1 btn-edit">Edit</button>
                         <button class="btn btn-sm btn-danger btn-delete">Delete</button>
