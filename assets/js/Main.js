@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let roleFromStorage = localStorage.getItem('userRole');
     if (!roleFromStorage) {
-        roleFromStorage = 'student';
+        roleFromStorage = 'admin';
     }
     applyRole(roleFromStorage);
 
