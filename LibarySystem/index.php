@@ -6,13 +6,12 @@
     <title>Document</title>
 </head>
 <body>
-    <?php include_once '../includes/db.php'; ?>
-    
-    <h1>Library System</h1>
-
-    <form action="../classes/author.php" method="post">
-        <button type="submit">Paintings</button>
-    </form>
-    
+    <h1>Library System Dashboard</h1>
+    <p>Welcome, <?php session_start(); echo htmlspecialchars($_SESSION['username']); ?>!</p>
+    <h2>Authors List</h2>
+    <?php
+        // The authors table will be displayed here from classes/author.php
+        require '../classes/author.php';
+    ?>  
 </body>
 </html>

@@ -21,7 +21,7 @@ if(empty($username) || empty($password)){
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            header('Location: dashboard.php');
+            header('Location: ../LibarySystem/index.php');
             exit();
         } else {
             echo "Invalid password.";

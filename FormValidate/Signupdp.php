@@ -40,7 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_stmt_execute($stmt)) {
         $_SESSION['success'] = "Account created successfully!";
-        header("Location: ../views/dashboard.php");
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = $role;
+        $_SESSION['email'] = $email;
+        header("Location: ../LibarySystem/index.php");
         exit();
     } else {
         $_SESSION['error'] = "Error creating account. Please try again.";
