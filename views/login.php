@@ -39,7 +39,7 @@
                     <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                     <label for="password"><i class="fas fa-key me-2"></i>Password</label>
                     <span class="password-toggle" id="togglePassword">
-                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-eye-slash"></i>
                     </span>
                 </div>
                 
