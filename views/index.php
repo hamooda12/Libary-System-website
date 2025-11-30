@@ -10,7 +10,7 @@ $allBooks = JSON_ENCODE($getAllBooks);
 $allPublishers = JSON_ENCODE($getAllPublishers);
 $allBorrowers = JSON_ENCODE($getAllBorrowers);
 $allLoans = JSON_ENCODE($getAllLoans);
-$allSales = JSON_ENCODE($getAllSales);
+
 ?>
 
 <!DOCTYPE html>
@@ -174,7 +174,7 @@ $allSales = JSON_ENCODE($getAllSales);
                 <div class="card mb-4 admin-only">
                     <div class="card-header">Insert New Book</div>
                     <div class="card-body">
-                        <form id="formBookInsert">
+                        <form id="formBookInsert" action="../classes/books.php" method="post">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Title</label>
@@ -182,7 +182,7 @@ $allSales = JSON_ENCODE($getAllSales);
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Publisher</label>
-                                    <select class="form-select" name="publisher_id">
+                                    <select class="form-select" name="publisher_id" id="publisherSelect">
                                         <option value="">Select Publisher</option>
                                     </select>
                                 </div>
@@ -206,7 +206,7 @@ $allSales = JSON_ENCODE($getAllSales);
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Insert Book</button>
+                            <button type="submit" class="btn btn-primary mt-3" id="insertBook">Insert Book</button>
                         </form>
                     </div>
                 </div>
@@ -844,10 +844,10 @@ $allSales = JSON_ENCODE($getAllSales);
 <script>
     const allAuthors = <?php echo $allAuthors; ?>;
     const allBooks = <?php echo $allBooks; ?>;
-    const allPublishers = <?php echo $allPublishers; ?>;
+    const allPublisher = <?php echo $allPublishers; ?>;
     const allBorrowers = <?php echo $allBorrowers; ?>;
     const allLoans = <?php echo $allLoans; ?>;
-    const allSales = <?php echo $allSales; ?>;
+
     </script>
 <script src="../assets/js/Main.js"></script>
 </body>

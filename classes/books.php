@@ -30,6 +30,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     
     else{
         echo "Error updating book.";
+        header("Location: ../views/index.php#section-books");
+        exit();
     }
    }}
 else if(isset($_POST['method']) && $_POST['method']=='deleteBook'){

@@ -204,8 +204,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 tbody.appendChild(tr);
             });
         }}
-        
- const modal = document.getElementById("modalBook");
+        let str = '';
+        for(let publisher of allPublisher) {
+            console.log(publisher);
+            str += `<option value="${publisher.publisher_id}">${publisher.name}</option>`;
+        }
+        let selectPublisher = document.getElementById('publisherSelect');
+        selectPublisher.innerHTML = `<select class="form-select" name="publisher_id" id="publisherSelect">` + 
+                                        `<option value="">Select Publisher</option>` + str + `</select>`;});
+const modal = document.getElementById("modalBook");
 const overlay = document.getElementById("overlay");
 const closeBtn = document.querySelector(".close");
 
@@ -292,69 +299,3 @@ closePublisherBtn.addEventListener("click", () => {
             });
         }
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-});
