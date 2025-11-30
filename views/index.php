@@ -581,6 +581,263 @@ $allSales = JSON_ENCODE($getAllSales);
 
     </div>
 </div>
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Modal Author -->
+<div id="modalAuthor" class="modal">
+    <span id="closeModalAuthor" class="close">&times;</span>
+    <h2>Update Author</h2>
+
+    <form id="formAuthorUpdate" class="modal-form" action="../classes/authors.php" method="post">
+        <input type="hidden" name="method" value="updateAuthor">
+
+        <label class="form-label" for="authorId">Author ID</label>
+        <input type="text" id="authorId" class="form-control" name="author_id" readonly>
+
+        <label class="form-label" for="authorFirst">First Name</label>
+        <input type="text" id="authorFirst" class="form-control" name="first_name" placeholder="First Name">
+
+        <label class="form-label" for="authorLast">Last Name</label>
+        <input type="text" id="authorLast" class="form-control" name="last_name" placeholder="Last Name">
+
+        <label class="form-label" for="authorCountry">Country</label>
+        <input type="text" id="authorCountry" class="form-control" name="country" placeholder="Country">
+
+        <label class="form-label" for="authorBio">Bio</label>
+        <textarea id="authorBio" class="form-control" name="bio" placeholder="Short Bio"></textarea>
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+<!-- Overlay -->
+<div id="overlayDelete" class="overlay"></div>
+
+<!-- Modal Delete Author -->
+<div id="modalDeleteAuthor" class="modal">
+    <span id="closeModalDeleteAuthor" class="close">&times;</span>
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this author?</p>
+
+    <form id="formDeleteAuthor" action="../classes/authors.php" method="post">
+        <input type="hidden" name="method" value="deleteAuthor">
+        <input type="hidden" id="deleteAuthorId" name="author_id">
+
+        <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelDeleteAuthor">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </div>
+    </form>
+</div>
+
+<!-- Overlay -->
+<div id="overlayBorrower" class="overlay"></div>
+
+<!-- Modal Borrower -->
+<div id="modalBorrower" class="modal">
+    <span id="closeModalBorrower" class="close">&times;</span>
+    <h2>Update Borrower</h2>
+
+    <form id="formBorrowerUpdate" class="modal-form" action="../classes/borrowers.php" method="post">
+        <input type="hidden" name="method" value="updateBorrower">
+
+        <label class="form-label" for="borrowerId">Borrower ID</label>
+        <input type="text" id="borrowerId" class="form-control" name="borrower_id" readonly>
+
+        <label class="form-label" for="borrowerFirst">First Name</label>
+        <input type="text" id="borrowerFirst" class="form-control" name="first_name" placeholder="First Name">
+
+        <label class="form-label" for="borrowerLast">Last Name</label>
+        <input type="text" id="borrowerLast" class="form-control" name="last_name" placeholder="Last Name">
+
+        <label class="form-label" for="borrowerType">Type ID</label>
+        <input type="number" id="borrowerType" class="form-control" name="type_id" placeholder="Type ID">
+
+        <label class="form-label" for="borrowerContact">Contact Info</label>
+        <input type="text" id="borrowerContact" class="form-control" name="contact_info" placeholder="Contact Info">
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+<!-- Overlay -->
+<div id="overlayDeleteBorrower" class="overlay"></div>
+
+<!-- Modal Delete Borrower -->
+<div id="modalDeleteBorrower" class="modal">
+    <span id="closeModalDeleteBorrower" class="close">&times;</span>
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this borrower?</p>
+
+    <form id="formDeleteBorrower" action="../classes/borrowers.php" method="post">
+        <input type="hidden" name="method" value="deleteBorrower">
+        <input type="hidden" id="deleteBorrowerId" name="borrower_id">
+
+        <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelDeleteBorrower">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </div>
+    </form>
+</div>
+
+<!-- Overlay -->
+<div id="overlayPublisher" class="overlay"></div>
+
+<!-- Modal Publisher -->
+<div id="modalPublisher" class="modal">
+    <span id="closeModalPublisher" class="close">&times;</span>
+    <h2>Update Publisher</h2>
+
+    <form id="formPublisherUpdate" class="modal-form" action="../classes/publishers.php" method="post">
+        <input type="hidden" name="method" value="updatePublisher">
+
+        <label class="form-label" for="publisherId">Publisher ID</label>
+        <input type="text" id="publisherId" class="form-control" name="publisher_id" readonly>
+
+        <label class="form-label" for="publisherName">Name</label>
+        <input type="text" id="publisherName" class="form-control" name="name" placeholder="Publisher Name">
+
+        <label class="form-label" for="publisherCity">City</label>
+        <input type="text" id="publisherCity" class="form-control" name="city" placeholder="City">
+
+        <label class="form-label" for="publisherCountry">Country</label>
+        <input type="text" id="publisherCountry" class="form-control" name="country" placeholder="Country">
+
+        <label class="form-label" for="publisherContact">Contact Info</label>
+        <input type="text" id="publisherContact" class="form-control" name="contact_info" placeholder="Contact Info">
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+<!-- Overlay -->
+<div id="overlayDeletePublisher" class="overlay"></div>
+
+<!-- Modal Delete Publisher -->
+<div id="modalDeletePublisher" class="modal">
+    <span id="closeModalDeletePublisher" class="close">&times;</span>
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this publisher?</p>
+
+    <form id="formDeletePublisher" action="../classes/publishers.php" method="post">
+        <input type="hidden" name="method" value="deletePublisher">
+        <input type="hidden" id="deletePublisherId" name="publisher_id">
+
+        <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelDeletePublisher">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </div>
+    </form>
+</div>
+
+<!-- Overlay -->
+<div id="overlayLoan" class="overlay"></div>
+
+<!-- Modal Loan -->
+<div id="modalLoan" class="modal">
+    <span id="closeModalLoan" class="close">&times;</span>
+    <h2>Update Loan</h2>
+
+    <form id="formLoanUpdate" class="modal-form" action="../classes/loans.php" method="post">
+        <input type="hidden" name="method" value="updateLoan">
+
+        <label class="form-label" for="loanId">Loan ID</label>
+        <input type="text" id="loanId" class="form-control" name="loan_id" readonly>
+
+        <label class="form-label" for="loanBorrower">Borrower ID</label>
+        <input type="number" id="loanBorrower" class="form-control" name="borrower_id" placeholder="Borrower ID">
+
+        <label class="form-label" for="loanBook">Book ID</label>
+        <input type="number" id="loanBook" class="form-control" name="book_id" placeholder="Book ID">
+
+        <label class="form-label" for="loanPeriod">Period ID</label>
+        <input type="number" id="loanPeriod" class="form-control" name="period_id" placeholder="Period ID">
+
+        <label class="form-label" for="loanDate">Loan Date</label>
+        <input type="date" id="loanDate" class="form-control" name="loan_date">
+
+        <label class="form-label" for="dueDate">Due Date</label>
+        <input type="date" id="dueDate" class="form-control" name="due_date">
+
+        <label class="form-label" for="returnDate">Return Date</label>
+        <input type="date" id="returnDate" class="form-control" name="return_date">
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+<!-- Overlay -->
+<div id="overlayDeleteLoan" class="overlay"></div>
+
+<!-- Modal Delete Loan -->
+<div id="modalDeleteLoan" class="modal">
+    <span id="closeModalDeleteLoan" class="close">&times;</span>
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this loan?</p>
+
+    <form id="formDeleteLoan" action="../classes/loans.php" method="post">
+        <input type="hidden" name="method" value="deleteLoan">
+        <input type="hidden" id="deleteLoanId" name="loan_id">
+
+        <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelDeleteLoan">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </div>
+    </form>
+</div>
+
+
+<!-- Overlay -->
+<div id="overlaySale" class="overlay"></div>
+
+<!-- Modal Sale -->
+<div id="modalSale" class="modal">
+    <span id="closeModalSale" class="close">&times;</span>
+    <h2>Update Sale</h2>
+
+    <form id="formSaleUpdate" class="modal-form" action="../classes/sales.php" method="post">
+        <input type="hidden" name="method" value="updateSale">
+
+        <label class="form-label" for="saleId">Sale ID</label>
+        <input type="text" id="saleId" class="form-control" name="sale_id" readonly>
+
+        <label class="form-label" for="saleBookId">Book ID</label>
+        <input type="number" id="saleBookId" class="form-control" name="book_id" placeholder="Book ID">
+
+        <label class="form-label" for="saleBorrowerId">Borrower ID</label>
+        <input type="number" id="saleBorrowerId" class="form-control" name="borrower_id" placeholder="Borrower ID">
+
+        <label class="form-label" for="saleDate">Sale Date</label>
+        <input type="date" id="saleDate" class="form-control" name="sale_date">
+
+        <label class="form-label" for="salePrice">Sale Price</label>
+        <input type="number" id="salePrice" class="form-control" name="sale_price" step="0.01" placeholder="Sale Price">
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+
+<!-- Overlay -->
+<div id="overlayDeleteSale" class="overlay"></div>
+
+<!-- Modal Delete Sale -->
+<div id="modalDeleteSale" class="modal">
+    <span id="closeModalDeleteSale" class="close">&times;</span>
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this sale?</p>
+
+    <form id="formDeleteSale" action="../classes/sales.php" method="post">
+        <input type="hidden" name="method" value="deleteSale">
+        <input type="hidden" id="deleteSaleId" name="sale_id">
+
+        <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelDeleteSale">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </div>
+    </form>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
