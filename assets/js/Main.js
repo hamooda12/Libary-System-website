@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  
+    
     const hash = window.location.hash;
     if(hash) {
         const targetSection = document.querySelector(hash);
@@ -107,13 +107,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const ctxLoansMonth = document.getElementById('chartLoansPerMonth');
         if (ctxLoansMonth) {
             const loansPerMonthData = {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
                     label: 'Loans',
-                    data: [5, 8, 12, 7, 10, 6]
+                    data: [30, 25, 40, 35, 50, 45, 60, 55, 9, 10, 11, 12]
                 }]
             };
-
+           
             new Chart(ctxLoansMonth, {
                 type: 'line',
                 data: loansPerMonthData,
@@ -143,10 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const statBorrowers = document.getElementById('statBorrowers');
     const statActiveLoans = document.getElementById('statActiveLoans');
 
-    if (statTotalBooks) statTotalBooks.textContent = '30';
-    if (statAvailableBooks) statAvailableBooks.textContent = '20';
-    if (statBorrowers) statBorrowers.textContent = '30';
-    if (statActiveLoans) statActiveLoans.textContent = '15';
+    if (statTotalBooks) statTotalBooks.textContent = numTotalBooks;
+    if (statAvailableBooks) statAvailableBooks.textContent = numAvailableBooks;
+    if (statBorrowers) statBorrowers.textContent = numTotalBorrowers;
+    if (statActiveLoans) statActiveLoans.textContent = numActiveLoans;
 
     const reportTotalBooksValue = document.getElementById('reportTotalBooksValue');
     const reportAvailableBooksCount = document.getElementById('reportAvailableBooksCount');
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${book.category}</td>
                     <td>${book.book_type}</td>
                     <td>${book.original_price}</td>
-                    <td>${book.available ? 'Yes' : 'No'}</td>
+                    <td>${book.available >0?'Yes' : 'No'}</td>
                     <td class="admin-only">
                         <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${book.book_id}">Edit</button>
                         <button class="btn btn-sm btn-danger btn-delete" data-id="${book.book_id}">Delete</button>

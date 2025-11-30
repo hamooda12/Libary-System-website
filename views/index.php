@@ -5,12 +5,17 @@ include '../classes/publisher.php';
 include '../classes/borrower.php';
 include '../classes/loan.php';
 include '../classes/sale.php';
+include '../includes/helper.php';
 $allAuthors = JSON_ENCODE($getAllAuthors);// عشان أبعتهم للجافا سكريبت
 $allBooks = JSON_ENCODE($getAllBooks);
 $allPublishers = JSON_ENCODE($getAllPublishers);
 $allBorrowers = JSON_ENCODE($getAllBorrowers);
 $allLoans = JSON_ENCODE($getAllLoans);
-
+$numTotalBooks = countRows('book', $conn);
+$numAvailableBooks = countRows('book WHERE available = 1', $conn);
+$numTotalBorrowers = countRows('borrower', $conn);
+$numActiveLoans = countRows('loan WHERE return_date IS NULL', $conn);
+$loansPerMonth = getLoansPerMonth($conn);
 ?>
 
 <!DOCTYPE html>
@@ -847,6 +852,11 @@ $allLoans = JSON_ENCODE($getAllLoans);
     const allPublisher = <?php echo $allPublishers; ?>;
     const allBorrowers = <?php echo $allBorrowers; ?>;
     const allLoans = <?php echo $allLoans; ?>;
+    const numTotalBooks = <?php echo $numTotalBooks; ?>;
+    const numAvailableBooks = <?php echo $numAvailableBooks; ?>;
+    const numTotalBorrowers = <?php echo $numTotalBorrowers; ?>;
+    const numActiveLoans = <?php echo $numActiveLoans; ?>;
+    const loansPerMonth = <?php echo $loansPerMonth; ?>;
 
     </script>
 <script src="../assets/js/Main.js"></script>
