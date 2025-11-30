@@ -248,3 +248,144 @@ body.role-student .btn-delete {
         position: relative;
     }
 }
+/* Overlay background */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;              /* hidden by default */
+    z-index: 999;
+}
+
+/* Modal box */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    width: 350px;
+    border-radius: 10px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    animation: fadeIn 0.2s ease;
+}
+.modal-error {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+
+#modalDeleteBook {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    width: 30%;           /* 30% من عرض الصفحة */
+    max-width: 400px;     /* لا يصبح أكبر من 400px */
+    border-radius: 12px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+    animation: fadeIn 0.2s ease;
+    height: auto;
+}
+#publisherModel{
+   position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    width: 30%;         
+    max-width: 400px;     
+    border-radius: 12px;
+    z-index: 1000;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+    animation: fadeIn 0.2s ease;
+    height: auto;
+
+}
+
+/* المحتوى الداخلي */
+#modalDeleteBook h2 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+#modalDeleteBook p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+/* أزرار */
+#modalDeleteBook .btn {
+    min-width: 80px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+
+}
+#modalDeleteBook .btn-confirm {
+    background-color: var(--error-color);
+    color: white;
+    border: none;
+}
+#modalDeleteBook .btn-confirm:hover {
+    background-color: #c53030;
+}
+#modalDeleteBook .btn-cancel {
+    background-color: var(--gray-medium);
+    color: var(--dark-color);
+    border: none;
+}
+#modalDeleteBook .btn-cancel:hover {
+    background-color: var(--gray-dark);
+    color: white;
+}
+
+
+/* Overlay */
+#overlayDelete {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    z-index: 999;
+}
+
+/* Close (X) button */
+.close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+}

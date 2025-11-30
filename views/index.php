@@ -1,7 +1,18 @@
 <?php
 include '../classes/author.php';
-$allAuthors = JSON_ENCODE($getALlAuthors);// عشان أبعتهم للجافا سكريبت
+include '../classes/books.php';
+include '../classes/publisher.php';
+include '../classes/borrower.php';
+include '../classes/loan.php';
+include '../classes/sale.php';
+$allAuthors = JSON_ENCODE($getAllAuthors);// عشان أبعتهم للجافا سكريبت
+$allBooks = JSON_ENCODE($getAllBooks);
+$allPublishers = JSON_ENCODE($getAllPublishers);
+$allBorrowers = JSON_ENCODE($getAllBorrowers);
+$allLoans = JSON_ENCODE($getAllLoans);
+$allSales = JSON_ENCODE($getAllSales);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +59,67 @@ $allAuthors = JSON_ENCODE($getALlAuthors);// عشان أبعتهم للجافا 
         </nav>
 
         <main class="col-12 col-md-9 col-lg-10 content-wrapper">
+
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Modal Book -->
+<div id="modalBook" class="modal">
+    <span id="closeModalBook" class="close">&times;</span>
+    <h2>Update Book</h2>
+<form id="formBook" class="modal-form" action="../classes/books.php" method="post">
+ <input type="hidden" name="method" value="updateBook">
+<label class="form-label" for="bookId">Book ID</label>
+ <input type="text" id="bookId" class="form-control" name="book_id" readonly >
+
+<label class="form-label" for="bookTitle">Title</label>
+<input type="text" id="bookTitle" class="form-control" placeholder="Book Title" name="title">
+
+        <label class="form-label" for="bookPublisher">Publisher_Id</label>
+        <input type="number" id="bookPublisher" class="form-control" placeholder="Publisher_Id" name="publisher_id">
+
+        <label class="form-label" for="bookCategory">Category</label>
+        <input type="text" id="bookCategory" class="form-control" placeholder="Category" name="category">
+
+        <label class="form-label" for="bookType">Type</label>
+        <input type="text" id="bookType" class="form-control" placeholder="Type" name="type">
+
+        <label class="form-label" for="bookPrice">Price</label>
+        <input type="number" id="bookPrice" class="form-control" placeholder="Price" name="price" step="0.01">
+
+        <label class="form-label" for="bookAvailable">Available</label>
+        <select id="bookAvailable" class="form-select" name="available">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+<!-- Overlay (Reuse the same overlay or separate if you want) -->
+<div id="overlayDelete" class="overlay"></div>
+
+<!-- Modal Delete Book -->
+<div id="modalDeleteBook" class="modal">
+    <span id="closeModalDeleteBook" class="close">&times;</span>
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this book?</p>
+
+    <form id="formDeleteBook" action="../classes/books.php" method="post">
+        <input type="hidden" name="method" value="deleteBook">
+        <input type="hidden" id="deleteBookId" name="book_id">
+        <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary" id="btnCancelDelete">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </div>
+    </form>
+</div>
+<div id="publisherModel" class="modal-error" style="display: none;">
+    <span id="closePublisherModal" class="close">&times;</span>
+    <h2>Wrong Publisher ID</h2>
+    <p>Please try again. The Publisher ID does not exist. Recheck the ID.</p>
+</div>
+
 
             <section id="section-dashboard" class="section-view active">
                 <h2 class="section-title">Dashboard Overview</h2>
@@ -514,7 +586,18 @@ $allAuthors = JSON_ENCODE($getALlAuthors);// عشان أبعتهم للجافا 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
     const allAuthors = <?php echo $allAuthors; ?>;
-    console.log(allAuthors); </script>
+    const allBooks = <?php echo $allBooks; ?>;
+    const allPublishers = <?php echo $allPublishers; ?>;
+    const allBorrowers = <?php echo $allBorrowers; ?>;
+    const allLoans = <?php echo $allLoans; ?>;
+    const allSales = <?php echo $allSales; ?>;
+    </script>
 <script src="../assets/js/Main.js"></script>
 </body>
+<?php if(isset($_GET['publisher_error'])): ?>
+<script>
+    document.getElementById('publisherModel').style.display = 'block';
+</script>
+<?php endif; ?>
+
 </html>

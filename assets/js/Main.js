@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
+  
+    const hash = window.location.hash;
+    if(hash) {
+        const targetSection = document.querySelector(hash);
+        if(targetSection) {
+            document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+            targetSection.classList.add('active');
+
+            const btn = document.querySelector(`.nav-button[data-target="${hash.substring(1)}"]`);
+            if(btn) {
+                document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        }
+    }
+
+
     const navButtons = document.querySelectorAll('.nav-button');
     const sections = document.querySelectorAll('.section-view');
 
@@ -166,51 +183,90 @@ document.addEventListener('DOMContentLoaded', function () {
     if (tableBooks) {
         const tbody = tableBooks.querySelector('tbody');
         if (tbody) {
-            const demoBooks = [
-                { id: 1, title: 'Book Title 1', publisher: 'Dar Al-Hikma', category: 'Category2', type: 'Type2', price: 13.00, available: 0 },
-                { id: 11, title: 'Book Title 11', publisher: 'Al-Quds Press', category: 'Category2', type: 'Type3', price: 43.00, available: 1 },
-                { id: 20, title: 'Book Title 20', publisher: 'Dar Al-Hikma', category: 'Category1', type: 'Type3', price: 70.00, available: 1 }
-            ];
+            const demoBooks =allBooks;
 
             tbody.innerHTML = '';
             demoBooks.forEach(book => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${book.id}</td>
+                    <td>${book.book_id}</td>
                     <td>${book.title}</td>
-                    <td>${book.publisher}</td>
+                    <td>${book.publisher_id}</td>
                     <td>${book.category}</td>
-                    <td>${book.type}</td>
-                    <td>${book.price.toFixed(2)}</td>
+                    <td>${book.book_type}</td>
+                    <td>${book.original_price}</td>
                     <td>${book.available ? 'Yes' : 'No'}</td>
                     <td class="admin-only">
-                        <button class="btn btn-sm btn-warning me-1 btn-edit" onAction=''>Edit</button>
-                        <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                        <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${book.book_id}">Edit</button>
+                        <button class="btn btn-sm btn-danger btn-delete" data-id="${book.book_id}">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
-            document.querySelectorAll(".btn-edit").forEach(btn => {
-    btn.addEventListener("click", function() {
-        let row = this.closest("tr");
-        let first_name = row.querySelector(".first_name").innerText;
-        let last_name = row.querySelector(".last_name").innerText;
-        let country = row.querySelector(".country").innerText;
-        let bio = row.querySelector(".bio").innerText;
+        }}
+        
+ const modal = document.getElementById("modalBook");
+const overlay = document.getElementById("overlay");
+const closeBtn = document.querySelector(".close");
 
-        row.querySelector(".first_name").innerHTML = `<input type="text" value="${first_name}" class="editName">`;
-        row.querySelector(".last_name").innerHTML = `<input type="text" value="${last_name}" class="editEmail">`;
-        row.querySelector(".country").innerHTML = `<input type="text" value="${country}" class="editName">`;
-        row.querySelector(".bio").innerHTML = `<input type="text" value="${bio}" class="editEmail">`;
-
-        row.querySelector(".btn-edit").style.display = "none";
-        row.querySelector(".saveBtn").style.display = "inline-block";
-        row.querySelector(".cancelBtn").style.display = "inline-block";
-    });
+document.getElementById('tableBooks').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-edit')) {
+        const bookId = e.target.getAttribute('data-id');
+        document.getElementById('bookId').value = bookId;
+        console.log("Editing book ID:",  e.target.getAttribute('data-id'));
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
+    }
 });
 
-        }
+
+
+closeBtn.addEventListener('click', () => {
+    modal.style.display = "none";
+    overlay.style.display = "none";
+});
+
+overlay.addEventListener('click', () => {
+    modal.style.display = "none";
+    overlay.style.display = "none";
+});
+const overlayDelete = document.getElementById("overlayDelete");
+const modalDeleteBook = document.getElementById("modalDeleteBook");
+const closeModalDeleteBtn = document.getElementById("closeModalDeleteBook");
+const btnCancelDelete = document.getElementById("btnCancelDelete");
+
+document.getElementById('tableBooks').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-delete')) {
+        const bookId = e.target.getAttribute('data-id');
+        document.getElementById('deleteBookId').value = bookId;
+        modalDeleteBook.style.display = 'block';
+        overlayDelete.style.display = 'block';
     }
+});
+
+closeModalDeleteBtn.addEventListener('click', () => {
+    modalDeleteBook.style.display = "none";
+    overlayDelete.style.display = "none";
+});
+btnCancelDelete.addEventListener('click', () => {
+    modalDeleteBook.style.display = "none";
+    overlayDelete.style.display = "none";
+});
+
+overlayDelete.addEventListener('click', () => {
+    modalDeleteBook.style.display = "none";
+    overlayDelete.style.display = "none";
+});
+const publisherModal = document.getElementById("publisherModel");
+const closePublisherBtn = document.getElementById("closePublisherModal");
+
+
+closePublisherBtn.addEventListener("click", () => {
+    publisherModal.style.display = "none";
+});
+
+
+
 
     const tableAuthors = document.getElementById('tableAuthors');
     if (tableAuthors) {
@@ -236,4 +292,69 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
