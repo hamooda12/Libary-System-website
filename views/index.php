@@ -15,7 +15,7 @@ $numTotalBooks = countRows('book', $conn);
 $numAvailableBooks = countRows('book WHERE available = 1', $conn);
 $numTotalBorrowers = countRows('borrower', $conn);
 $numActiveLoans = countRows('loan WHERE return_date IS NULL', $conn);
-$loansPerMonth = getLoansPerMonth($conn);
+$loansPerMonth = JSON_ENCODE(getLoansPerMonth($conn));
 ?>
 
 <!DOCTYPE html>

@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
                     label: 'Loans',
-                    data: [30, 25, 40, 35, 50, 45, 60, 55, 9, 10, 11, 12]
+                    data: [loansPerMonth[0] || 0, loansPerMonth[1] || 0, loansPerMonth[2] || 0, loansPerMonth[3] || 0, loansPerMonth[4] || 0, loansPerMonth[5] || 0, loansPerMonth[6] || 0, loansPerMonth[7] || 0, loansPerMonth[8] || 0, loansPerMonth[9] || 0, loansPerMonth[10] || 0, loansPerMonth[11] || 0]
                 }]
             };
            
