@@ -25,5 +25,14 @@ function getCategoryDistribution($conn) {
     }
     return $data;
 }
+function getNotsoldBooks($conn) {
+    $sql = "SELECT * FROM book WHERE available = 1";
+    $result = mysqli_query($conn, $sql);
+    $data = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    return $data;
+}
 
 ?>

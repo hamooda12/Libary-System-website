@@ -19,6 +19,7 @@ $loansPerMonth = JSON_ENCODE(getLoansPerMonth($conn));
 $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
 $getAllBorrowersTypes = JSON_ENCODE(display('borrowertype', $conn));
 $getAllLoanPeriods = JSON_ENCODE(display('loanperiod', $conn));
+$getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
 ?>
 
 <!DOCTYPE html>
@@ -870,6 +871,7 @@ $getAllLoanPeriods = JSON_ENCODE(display('loanperiod', $conn));
     const categoryDistribution = <?php echo $categoryDistribution; ?>;
     const allBorrowersTypes = <?php echo $getAllBorrowersTypes; ?>;
     const allLoanPeriods = <?php echo $getAllLoanPeriods; ?>;
+    const allNotsoldBooks = <?php echo $getAllnotsoldBooks; ?>;
     </script>
 <script src="../assets/js/Main.js"></script>
 </body>

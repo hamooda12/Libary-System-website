@@ -246,7 +246,7 @@ let selectLoanPeriod = document.getElementById('LoanPeriodTypeSelect');
                                         `<option value="">Select Loan Period</option>` + str5 + `</select>`;
 let selectSaleBook = document.getElementById('SaleBookList');
         let str6 = '';
-        for(let book of allBooks) {
+        for(let book of allNotsoldBooks) {
             console.log(book);
             str6 += `<option value="${book.book_id}">${book.title}</option>`;
         }
@@ -260,7 +260,7 @@ let selectSaleBorrower = document.getElementById('SaleBorrowerList');
         }   
         selectSaleBorrower.innerHTML = `<select class="form-select" name="borrower_id" id="SaleBorrowerList">` +
                                         `<option value="">Select Borrower</option>` + str7 + `</select>`;
-                                                                               
+
 const modal = document.getElementById("modalBook");
 const overlay = document.getElementById("overlay");
 const closeBtn = document.querySelector(".close");
