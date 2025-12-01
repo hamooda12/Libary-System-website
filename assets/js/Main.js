@@ -75,10 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const ctxBooksCat = document.getElementById('chartBooksByCategory');
         if (ctxBooksCat) {
             const booksByCategoryData = {
-                labels: ['Category1', 'Category2', 'Category3', 'Category4', 'Category5'],
+                labels: categoryDistribution ? Object.keys(categoryDistribution) : ['Category1', 'Category2', 'Category3', 'Category4', 'Category5'],
                 datasets: [{
                     label: 'Books',
-                    data: [10, 7, 13, 5, 9]
+                    data: categoryDistribution ? Object.values(categoryDistribution) : [12, 19, 7, 5, 10]
                 }]
             };
 
@@ -291,11 +291,103 @@ closePublisherBtn.addEventListener("click", () => {
                     <td><span class="country">${a.country}</span></td>
                     <td><span class="bio">${a.bio}</span></td>
                     <td class="admin-only">
-                        <button class="btn btn-sm btn-warning me-1 btn-edit">Edit</button>
+                        <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${a.auhtor_id}">Edit</button>
                         <button class="btn btn-sm btn-danger btn-delete">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
+  /**let str = '';
+        for(let publisher of allPublisher) {
+            console.log(publisher);
+            str += `<option value="${publisher.publisher_id}">${publisher.name}</option>`;
+        }
+        let selectPublisher = document.getElementById('publisherSelect');
+        selectPublisher.innerHTML = `<select class="form-select" name="publisher_id" id="publisherSelect">` + 
+                                        `<option value="">Select Publisher</option>` + str + `</select>`;});
+const modal = document.getElementById("modalBook");
+const overlay = document.getElementById("overlay");
+const closeBtn = document.querySelector(".close");
+
+document.getElementById('tableBooks').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-edit')) {
+        const bookId = e.target.getAttribute('data-id');
+        document.getElementById('bookId').value = bookId;
+        console.log("Editing book ID:",  e.target.getAttribute('data-id'));
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
     }
+});
+
+
+
+closeBtn.addEventListener('click', () => {
+    modal.style.display = "none";
+    overlay.style.display = "none";
+});
+
+overlay.addEventListener('click', () => {
+    modal.style.display = "none";
+    overlay.style.display = "none";
+});
+const overlayDelete = document.getElementById("overlayDelete");
+const modalDeleteBook = document.getElementById("modalDeleteBook");
+const closeModalDeleteBtn = document.getElementById("closeModalDeleteBook");
+const btnCancelDelete = document.getElementById("btnCancelDelete");
+
+document.getElementById('tableBooks').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-delete')) {
+        const bookId = e.target.getAttribute('data-id');
+        document.getElementById('deleteBookId').value = bookId;
+        modalDeleteBook.style.display = 'block';
+        overlayDelete.style.display = 'block';
+    }
+});
+
+closeModalDeleteBtn.addEventListener('click', () => {
+    modalDeleteBook.style.display = "none";
+    overlayDelete.style.display = "none";
+});
+btnCancelDelete.addEventListener('click', () => {
+    modalDeleteBook.style.display = "none";
+    overlayDelete.style.display = "none";
+});
+
+overlayDelete.addEventListener('click', () => {
+    modalDeleteBook.style.display = "none";
+    overlayDelete.style.display = "none";
+});
+const publisherModal = document.getElementById("publisherModel");
+const closePublisherBtn = document.getElementById("closePublisherModal");
+
+
+closePublisherBtn.addEventListener("click", () => {
+    publisherModal.style.display = "none";
+});
+**/
+    }
+const modal2 = document.getElementById("modalAuthor");
+const overlay2 = document.getElementById("overlay");
+const closeBtn2 = document.querySelector(".close");
+
+document.getElementById('tableAuthors').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-edit')) {
+        const authorId2 = e.target.getAttribute('data-id');
+        document.getElementById('authorId2').value = authorId2;
+        console.log("Editing author ID:",  e.target.getAttribute('data-id'));
+        modal2.style.display = 'block';
+        overlay2.style.display = 'block';
+    }
+});
+
+
+
+closeBtn2.addEventListener('click', () => {
+    modal2.style.display = "none";
+    overlay2.style.display = "none";
+});
+
+
+
+    

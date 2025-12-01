@@ -16,4 +16,14 @@ function getLoansPerMonth($conn) {
     }
     return $data;
 }
+function getCategoryDistribution($conn) {
+    $sql = "SELECT category, COUNT(*) AS total FROM book GROUP BY category";
+    $result = mysqli_query($conn, $sql);
+    $data = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[$row['category']] = $row['total'];
+    }
+    return $data;
+}
+
 ?>

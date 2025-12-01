@@ -16,6 +16,7 @@ $numAvailableBooks = countRows('book WHERE available = 1', $conn);
 $numTotalBorrowers = countRows('borrower', $conn);
 $numActiveLoans = countRows('loan WHERE return_date IS NULL', $conn);
 $loansPerMonth = JSON_ENCODE(getLoansPerMonth($conn));
+$categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
 ?>
 
 <!DOCTYPE html>
@@ -180,6 +181,7 @@ $loansPerMonth = JSON_ENCODE(getLoansPerMonth($conn));
                     <div class="card-header">Insert New Book</div>
                     <div class="card-body">
                         <form id="formBookInsert" action="../classes/books.php" method="post">
+                            <input type="hidden" name="method" value="insertBook">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Title</label>
@@ -248,6 +250,7 @@ $loansPerMonth = JSON_ENCODE(getLoansPerMonth($conn));
                     <div class="card-header">Insert New Author</div>
                     <div class="card-body">
                         <form id="formAuthorInsert">
+                            <input type="hidden" name="method" value="insertAuthor">
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label">First Name</label>
@@ -857,7 +860,7 @@ $loansPerMonth = JSON_ENCODE(getLoansPerMonth($conn));
     const numTotalBorrowers = <?php echo $numTotalBorrowers; ?>;
     const numActiveLoans = <?php echo $numActiveLoans; ?>;
     const loansPerMonth = <?php echo $loansPerMonth; ?>;
-
+    const categoryDistribution = <?php echo $categoryDistribution; ?>;
     </script>
 <script src="../assets/js/Main.js"></script>
 </body>

@@ -45,6 +45,37 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteBook'){
     else{
         echo "Error deleting book.";
     }  }
+    else if(isset($_POST['method']) && $_POST['method']=='insertBook'){
+        $data=[
+            'title'=>$_POST['title'],
+            'book_type'=>$_POST['book_type'],
+            'publisher_id'=>$_POST['publisher_id'],
+            'category'=>$_POST['category'],
+            'original_price'=>$_POST['original_price'],
+            'available'=>$_POST['available']
+            
+        ];
+        if (!helperUpdate($data['publisher_id'],'publisher',$conn,'publisher_id')){
+       
+            header("Location: ../views/index.php?publisher_error=1#section-books");
+            exit();
+    
+        }
+        else{
+        $insertBook=insert('book',$data,$conn);
+        if($insertBook){
+            header("Location: ../views/index.php#section-books");
+            exit();
+        }
+         
+        
+        else{
+            echo "Error inserting book.";
+            header("Location: ../views/index.php#section-books");
+            exit();
+        }
+       }
+    }
 
 
 }

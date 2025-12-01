@@ -37,6 +37,26 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteAuthor'){
     else{
         echo "Error deleting author.";
     }  }
+    else if(isset($_POST['method']) && $_POST['method']=='insertAuthor'){
+        $data=[
+            'first_name'=>$_POST['first_name'],
+            'last_name'=>$_POST['last_name'],
+            'country'=>$_POST['country'],
+            'bio'=>$_POST['bio']
+            
+        ];
+        
+        $insertAuthor=insert('author',$data,$conn);
+        if($insertAuthor){
+            header("Location: ../views/index.php#section-authors");
+            exit();
+        }
+        else{
+            echo "Error inserting author.";
+            header("Location: ../views/index.php#section-authors");
+            exit();
+        }
+    }
 
 
 }
