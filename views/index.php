@@ -597,7 +597,7 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
     <span id="closeModalAuthor" class="close">&times;</span>
     <h2>Update Author</h2>
 
-    <form id="formAuthorUpdate" class="modal-form" action="../classes/authors.php" method="post">
+    <form id="formAuthorUpdate" class="modal-form" action="../classes/author.php" method="post">
         <input type="hidden" name="method" value="updateAuthor">
 
         <label class="form-label" for="authorId">Author ID</label>
@@ -627,7 +627,7 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
     <h2>Confirm Delete</h2>
     <p>Are you sure you want to delete this author?</p>
 
-    <form id="formDeleteAuthor" action="../classes/authors.php" method="post">
+    <form id="formDeleteAuthor" action="../classes/author.php" method="post">
         <input type="hidden" name="method" value="deleteAuthor">
         <input type="hidden" id="deleteAuthorId" name="author_id">
 

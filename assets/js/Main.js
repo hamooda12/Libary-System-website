@@ -291,8 +291,8 @@ closePublisherBtn.addEventListener("click", () => {
                     <td><span class="country">${a.country}</span></td>
                     <td><span class="bio">${a.bio}</span></td>
                     <td class="admin-only">
-                        <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${a.auhtor_id}">Edit</button>
-                        <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                        <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${a.author_id}">Edit</button>
+                        <button class="btn btn-sm btn-danger btn-delete" data-id="${a.author_id}">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -369,12 +369,12 @@ closePublisherBtn.addEventListener("click", () => {
     }
 const modal2 = document.getElementById("modalAuthor");
 const overlay2 = document.getElementById("overlay");
-const closeBtn2 = document.querySelector(".close");
+const closeBtn2 = document.querySelector("#closeModalAuthor");
 
 document.getElementById('tableAuthors').addEventListener('click', (e) => {
     if (e.target && e.target.classList.contains('btn-edit')) {
-        const authorId2 = e.target.getAttribute('data-id');
-        document.getElementById('authorId2').value = authorId2;
+        const authorId = e.target.getAttribute('data-id');
+        document.getElementById('authorId').value = authorId;
         console.log("Editing author ID:",  e.target.getAttribute('data-id'));
         modal2.style.display = 'block';
         overlay2.style.display = 'block';
@@ -387,7 +387,33 @@ closeBtn2.addEventListener('click', () => {
     modal2.style.display = "none";
     overlay2.style.display = "none";
 });
+const overlayDelete2 = document.getElementById("overlayDelete");
+const modalDeleteAuthor = document.getElementById("modalDeleteAuthor");
+const closeModalDeleteBtn2 = document.getElementById("closeModalDeleteAuthor");
+const btnCancelDelete2 = document.getElementById("btnCancelDeleteAuthor");
 
+document.getElementById('tableAuthors').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-delete')) {
+        const AuthorId = e.target.getAttribute('data-id');
+        document.getElementById('deleteAuthorId').value = AuthorId;
+        modalDeleteAuthor.style.display = 'block';
+        overlayDelete2.style.display = 'block';
+    }
+});
+
+closeModalDeleteBtn2.addEventListener('click', () => {
+    modalDeleteAuthor.style.display = "none";
+    overlayDelete2.style.display = "none";
+});
+btnCancelDelete2.addEventListener('click', () => {
+    modalDeleteAuthor.style.display = "none";
+    overlayDelete2.style.display = "none";
+});
+
+overlayDelete2.addEventListener('click', () => {
+    modalDeleteAuthor.style.display = "none";
+    overlayDelete2.style.display = "none";
+});
 
 
     
