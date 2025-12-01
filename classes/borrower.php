@@ -37,6 +37,26 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteBorrower'){
     else{
         echo "Error deleting borrower.";
     }  }
+    else if(isset($_POST['method']) && $_POST['method']=='insertBorrower'){
+        $data=[
+            'first_name'=>$_POST['first_name'],
+            'last_name'=>$_POST['last_name'],
+            'type_id'=>$_POST['type_id'],
+            'contact_info'=>$_POST['contact_info']
+            
+        ];
+        
+        $insertBorrower=insert('borrower',$data,$conn);
+        if($insertBorrower){
+            header("Location: ../views/index.php#section-borrowers");
+            exit();
+        }
+        else{
+            echo "Error inserting borrower.";
+            header("Location: ../views/index.php#section-borrowers");
+            exit();
+        }
+    }
 
 
 }

@@ -17,6 +17,8 @@ $numTotalBorrowers = countRows('borrower', $conn);
 $numActiveLoans = countRows('loan WHERE return_date IS NULL', $conn);
 $loansPerMonth = JSON_ENCODE(getLoansPerMonth($conn));
 $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
+$getAllBorrowersTypes = JSON_ENCODE(display('borrowertype', $conn));
+$getAllLoanPeriods = JSON_ENCODE(display('loanperiod', $conn));
 ?>
 
 <!DOCTYPE html>
@@ -249,7 +251,8 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
                 <div class="card mb-4 admin-only">
                     <div class="card-header">Insert New Author</div>
                     <div class="card-body">
-                        <form id="formAuthorInsert">
+                        <form id="formAuthorInsert" 
+                    action="../classes/author.php" method="post">
                             <input type="hidden" name="method" value="insertAuthor">
                             <div class="row g-3">
                                 <div class="col-md-4">
@@ -303,7 +306,8 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
                 <div class="card mb-4 admin-only">
                     <div class="card-header">Insert New Publisher</div>
                     <div class="card-body">
-                        <form id="formPublisherInsert">
+                        <form id="formPublisherInsert" action="../classes/publisher.php" method="post">
+                            <input type="hidden" name="method" value="insertPublisher">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Name</label>
@@ -357,7 +361,8 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
                 <div class="card mb-4 admin-only">
                     <div class="card-header">Insert New Borrower</div>
                     <div class="card-body">
-                        <form id="formBorrowerInsert">
+                        <form id="formBorrowerInsert" action ="../classes/borrower.php" method="post">
+                            <input type="hidden" name="method" value="insertBorrower">
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label">First Name</label>
@@ -369,7 +374,7 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Type</label>
-                                    <select class="form-select" name="type_id">
+                                    <select id= "borrowerTypeSelect" class="form-select" name="type_id">
                                         <option value="">Select Type</option>
                                     </select>
                                 </div>
@@ -413,23 +418,24 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
                 <div class="card mb-4 admin-only">
                     <div class="card-header">Insert New Loan</div>
                     <div class="card-body">
-                        <form id="formLoanInsert">
+                        <form id="formLoanInsert" action="../classes/loan.php" method="post">
+                            <input type="hidden" name="method" value="insertLoan">
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Borrower</label>
-                                    <select class="form-select" name="borrower_id">
+                                    <select id="LoanBorrowerTypeSelect" class="form-select" name="borrower_id">
                                         <option value="">Select Borrower</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Book</label>
-                                    <select class="form-select" name="book_id">
+                                    <select id="LoanBookTypeSelect" class="form-select" name="book_id">
                                         <option value="">Select Book</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Loan Period</label>
-                                    <select class="form-select" name="period_id">
+                                    <select id="LoanPeriodTypeSelect" class="form-select" name="period_id">
                                         <option value="">Select Period</option>
                                     </select>
                                 </div>
@@ -483,17 +489,18 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
                 <div class="card mb-4 admin-only">
                     <div class="card-header">Insert New Sale</div>
                     <div class="card-body">
-                        <form id="formSaleInsert">
+                        <form id="formSaleInsert" action="../classes/sale.php" method="post">
+                            <input type="hidden" name="method" value="insertSale">
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Book</label>
-                                    <select class="form-select" name="book_id">
+                                    <select id="SaleBookList" class="form-select" name="book_id">
                                         <option value="">Select Book</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Customer / Borrower</label>
-                                    <select class="form-select" name="borrower_id">
+                                    <select id="SaleBorrowerList" class="form-select" name="borrower_id">
                                         <option value="">Select Borrower</option>
                                     </select>
                                 </div>
@@ -861,6 +868,8 @@ $categoryDistribution = JSON_ENCODE(getCategoryDistribution($conn));
     const numActiveLoans = <?php echo $numActiveLoans; ?>;
     const loansPerMonth = <?php echo $loansPerMonth; ?>;
     const categoryDistribution = <?php echo $categoryDistribution; ?>;
+    const allBorrowersTypes = <?php echo $getAllBorrowersTypes; ?>;
+    const allLoanPeriods = <?php echo $getAllLoanPeriods; ?>;
     </script>
 <script src="../assets/js/Main.js"></script>
 </body>

@@ -212,6 +212,55 @@ document.addEventListener('DOMContentLoaded', function () {
         let selectPublisher = document.getElementById('publisherSelect');
         selectPublisher.innerHTML = `<select class="form-select" name="publisher_id" id="publisherSelect">` + 
                                         `<option value="">Select Publisher</option>` + str + `</select>`;});
+let selectborrowerType = document.getElementById('borrowerTypeSelect');
+        let str2 = '';
+        for(let borrowerType of allBorrowersTypes) {
+            console.log(borrowerType);
+            str2 += `<option value="${borrowerType.type_id}">${borrowerType.type_name}</option>`;
+        }
+        selectborrowerType.innerHTML = `<select class="form-select" name="type_id" id="borrowerTypeSelect">` +
+                                        `<option value="">Select Borrower Type</option>` + str2 + `</select>`;
+let selectLoanBorrower = document.getElementById('LoanBorrowerTypeSelect');
+        let str3 = '';
+        for(let borrower of allBorrowers) {
+            console.log(borrower);
+            str3 += `<option value="${borrower.borrower_id}">${borrower.first_name} ${borrower.last_name}</option>`;
+        }
+        selectLoanBorrower.innerHTML = `<select class="form-select" name="borrower_id" id="LoanBorrowerTypeSelect">` +
+                                        `<option value="">Select Borrower</option>` + str3 + `</select>`;
+let selectLoanBook = document.getElementById('LoanBookTypeSelect');
+        let str4 = '';
+        for(let book of allBooks) {
+            console.log(book);
+            str4 += `<option value="${book.book_id}">${book.title}</option>`;
+        }
+        selectLoanBook.innerHTML = `<select class="form-select" name="book_id" id="LoanBookTypeSelect">` +
+                                        `<option value="">Select Book</option>` + str4 + `</select>`;
+let selectLoanPeriod = document.getElementById('LoanPeriodTypeSelect');
+        let str5 = '';
+        for(let period of allLoanPeriods) {
+            console.log(period);
+            str5 += `<option value="${period.period_id}">${period.period_name}</option>`;
+        }
+        selectLoanPeriod.innerHTML = `<select class="form-select" name="period_id" id="LoanPeriodTypeSelect">` +
+                                        `<option value="">Select Loan Period</option>` + str5 + `</select>`;
+let selectSaleBook = document.getElementById('SaleBookList');
+        let str6 = '';
+        for(let book of allBooks) {
+            console.log(book);
+            str6 += `<option value="${book.book_id}">${book.title}</option>`;
+        }
+        selectSaleBook.innerHTML = `<select class="form-select" name="book_id" id="SaleBookList">` +
+                                        `<option value="">Select Book</option>` + str6 + `</select>`;
+let selectSaleBorrower = document.getElementById('SaleBorrowerList');
+        let str7 = '';
+        for(let borrower of allBorrowers) {
+            console.log(borrower);
+            str7 += `<option value="${borrower.borrower_id}">${borrower.first_name} ${borrower.last_name}</option>`;
+        }   
+        selectSaleBorrower.innerHTML = `<select class="form-select" name="borrower_id" id="SaleBorrowerList">` +
+                                        `<option value="">Select Borrower</option>` + str7 + `</select>`;
+                                                                               
 const modal = document.getElementById("modalBook");
 const overlay = document.getElementById("overlay");
 const closeBtn = document.querySelector(".close");

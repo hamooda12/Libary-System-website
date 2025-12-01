@@ -39,6 +39,29 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteLoan'){
     else{
         echo "Error deleting loan.";
     }  }
+    else if(isset($_POST['method']) && $_POST['method']=='insertLoan'){
+        $data=[
+            'borrower_id'=>$_POST['borrower_id'],
+            'book_id'=>$_POST['book_id'],
+            'period_id'=>$_POST['period_id'],
+            'loan_date'=>$_POST['loan_date'],
+            'due_date'=>$_POST['due_date'],
+            'return_date'=>$_POST['return_date']
+            
+        ];
+        
+        $insertLoan=insert('loan',$data,$conn);
+        if($insertLoan){
+            header("Location: ../views/index.php#section-loan");
+            exit();
+        }
+        else{
+            echo "Error inserting loan.";
+            header("Location: ../views/index.php#section-loan");
+            exit();
+        }
+    }
+    
 
 
 }
