@@ -46,7 +46,6 @@ if (strcasecmp($userRole, 'Admin') !== 0) {
                         
                         <div class="mt-4">
                             <a href="../views/index.php" class="btn btn-primary">Go to Main Dashboard</a>
-                            <a href="../views/search.php" class="btn btn-info">Search System</a>
                             <a href="../FormValidate/logout.php" class="btn btn-danger">Logout</a>
                         </div>
                     </div>

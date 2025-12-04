@@ -9,11 +9,126 @@ include '../classes/borrowertype.php';
 include '../classes/loanperiod.php';
 include '../includes/helper.php';
 include '../includes/reports.php';
+
+// Store original data for building maps (needed for loans/sales search)
+$originalBooks = $getAllBooks;
+$originalBorrowers = $getAllBorrowers;
+
+// Handle search for each table
+$searchBooks = isset($_POST['search_books']) ? trim($_POST['search_books']) : '';
+$searchAuthors = isset($_POST['search_authors']) ? trim($_POST['search_authors']) : '';
+$searchPublishers = isset($_POST['search_publishers']) ? trim($_POST['search_publishers']) : '';
+$searchBorrowers = isset($_POST['search_borrowers']) ? trim($_POST['search_borrowers']) : '';
+$searchLoans = isset($_POST['search_loans']) ? trim($_POST['search_loans']) : '';
+$searchSales = isset($_POST['search_sales']) ? trim($_POST['search_sales']) : '';
+
+// Filter Books
+if (!empty($searchBooks)) {
+    $filteredBooks = [];
+    foreach ($getAllBooks as $book) {
+        if (stripos($book['title'], $searchBooks) !== false || 
+            stripos($book['category'], $searchBooks) !== false || 
+            stripos($book['book_type'], $searchBooks) !== false) {
+            $filteredBooks[] = $book;
+        }
+    }
+    $getAllBooks = $filteredBooks;
+}
+
+// Filter Authors
+if (!empty($searchAuthors)) {
+    $filteredAuthors = [];
+    foreach ($getAllAuthors as $author) {
+        if (stripos($author['first_name'], $searchAuthors) !== false || 
+            stripos($author['last_name'], $searchAuthors) !== false || 
+            stripos($author['country'], $searchAuthors) !== false) {
+            $filteredAuthors[] = $author;
+        }
+    }
+    $getAllAuthors = $filteredAuthors;
+}
+
+// Filter Publishers
+if (!empty($searchPublishers)) {
+    $filteredPublishers = [];
+    foreach ($getAllPublishers as $publisher) {
+        if (stripos($publisher['name'], $searchPublishers) !== false || 
+            stripos($publisher['city'], $searchPublishers) !== false || 
+            stripos($publisher['country'], $searchPublishers) !== false) {
+            $filteredPublishers[] = $publisher;
+        }
+    }
+    $getAllPublishers = $filteredPublishers;
+}
+
+// Filter Borrowers
+if (!empty($searchBorrowers)) {
+    $filteredBorrowers = [];
+    foreach ($getAllBorrowers as $borrower) {
+        if (stripos($borrower['first_name'], $searchBorrowers) !== false || 
+            stripos($borrower['last_name'], $searchBorrowers) !== false) {
+            $filteredBorrowers[] = $borrower;
+        }
+    }
+    $getAllBorrowers = $filteredBorrowers;
+}
+
+// Filter Loans (search by borrower name or book title - need to get related data)
+if (!empty($searchLoans)) {
+    $filteredLoans = [];
+    // Use original data for building maps
+    $borrowerMap = [];
+    foreach ($originalBorrowers as $borrower) {
+        $borrowerMap[$borrower['borrower_id']] = $borrower['first_name'] . ' ' . $borrower['last_name'];
+    }
+    $bookMap = [];
+    foreach ($originalBooks as $book) {
+        $bookMap[$book['book_id']] = $book['title'];
+    }
+    
+    foreach ($getAllLoans as $loan) {
+        $borrowerName = isset($borrowerMap[$loan['borrower_id']]) ? $borrowerMap[$loan['borrower_id']] : '';
+        $bookTitle = isset($bookMap[$loan['book_id']]) ? $bookMap[$loan['book_id']] : '';
+        if (stripos($borrowerName, $searchLoans) !== false || 
+            stripos($bookTitle, $searchLoans) !== false ||
+            stripos($loan['loan_date'], $searchLoans) !== false) {
+            $filteredLoans[] = $loan;
+        }
+    }
+    $getAllLoans = $filteredLoans;
+}
+
+// Filter Sales (similar to loans)
+if (!empty($searchSales)) {
+    $filteredSales = [];
+    // Use original data for building maps
+    $borrowerMap = [];
+    foreach ($originalBorrowers as $borrower) {
+        $borrowerMap[$borrower['borrower_id']] = $borrower['first_name'] . ' ' . $borrower['last_name'];
+    }
+    $bookMap = [];
+    foreach ($originalBooks as $book) {
+        $bookMap[$book['book_id']] = $book['title'];
+    }
+    
+    foreach ($getAllSales as $sale) {
+        $borrowerName = isset($borrowerMap[$sale['borrower_id']]) ? $borrowerMap[$sale['borrower_id']] : '';
+        $bookTitle = isset($bookMap[$sale['book_id']]) ? $bookMap[$sale['book_id']] : '';
+        if (stripos($borrowerName, $searchSales) !== false || 
+            stripos($bookTitle, $searchSales) !== false ||
+            stripos($sale['sale_date'], $searchSales) !== false) {
+            $filteredSales[] = $sale;
+        }
+    }
+    $getAllSales = $filteredSales;
+}
+
 $allAuthors = JSON_ENCODE($getAllAuthors);// عشان أبعتهم للجافا سكريبت
 $allBooks = JSON_ENCODE($getAllBooks);
 $allPublishers = JSON_ENCODE($getAllPublishers);
 $allBorrowers = JSON_ENCODE($getAllBorrowers);
 $allLoans = JSON_ENCODE($getAllLoans);
+$allSales = JSON_ENCODE($getAllSales);
 $numTotalBooks = countRows('book', $conn);
 $numAvailableBooks = countRows('book WHERE available = 1', $conn);
 $numTotalBorrowers = countRows('borrower', $conn);
@@ -61,7 +176,6 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                 <button class="btn btn-outline-light nav-button" data-target="section-sales">Sales</button>
                 <button class="btn btn-outline-light nav-button" data-target="section-reports">Reports</button>
                 <button class="btn btn-outline-light nav-button" data-target="section-programmers">Programmer Info</button>
-                <a href="search.php" class="btn btn-outline-light nav-button mt-2">Search System</a>
 
                 <button class="btn btn-danger mt-3" id="btn-logout">Log Out</button>
             </div>
@@ -225,10 +339,21 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                     </div>
                 </div>
 
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST" action="#section-books" class="d-flex gap-2">
+                            <input type="text" class="form-control" name="search_books" placeholder="Search books by title, category, or type..." value="<?php echo htmlspecialchars($searchBooks ?? ''); ?>">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <?php if (!empty($searchBooks)): ?>
+                            <a href="index.php#section-books" class="btn btn-secondary">Clear</a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <span>Books List</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Search...">
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-striped table-hover mb-0" id="tableBooks">
@@ -282,10 +407,21 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                     </div>
                 </div>
 
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST" action="#section-authors" class="d-flex gap-2">
+                            <input type="text" class="form-control" name="search_authors" placeholder="Search authors by name or country..." value="<?php echo htmlspecialchars($searchAuthors ?? ''); ?>">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <?php if (!empty($searchAuthors)): ?>
+                            <a href="index.php#section-authors" class="btn btn-secondary">Clear</a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <span>Authors List</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Search...">
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-striped table-hover mb-0" id="tableAuthors">
@@ -336,10 +472,21 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                     </div>
                 </div>
 
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST" action="#section-publishers" class="d-flex gap-2">
+                            <input type="text" class="form-control" name="search_publishers" placeholder="Search publishers by name, city, or country..." value="<?php echo htmlspecialchars($searchPublishers ?? ''); ?>">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <?php if (!empty($searchPublishers)): ?>
+                            <a href="index.php#section-publishers" class="btn btn-secondary">Clear</a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <span>Publishers List</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Search...">
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-striped table-hover mb-0" id="tablePublishers">
@@ -393,10 +540,21 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                     </div>
                 </div>
 
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST" action="#section-borrowers" class="d-flex gap-2">
+                            <input type="text" class="form-control" name="search_borrowers" placeholder="Search borrowers by name..." value="<?php echo htmlspecialchars($searchBorrowers ?? ''); ?>">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <?php if (!empty($searchBorrowers)): ?>
+                            <a href="index.php#section-borrowers" class="btn btn-secondary">Clear</a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <span>Borrowers List</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Search...">
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-striped table-hover mb-0" id="tableBorrowers">
@@ -462,10 +620,21 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                     </div>
                 </div>
 
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST" action="#section-loans" class="d-flex gap-2">
+                            <input type="text" class="form-control" name="search_loans" placeholder="Search loans by borrower name, book title, or date..." value="<?php echo htmlspecialchars($searchLoans ?? ''); ?>">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <?php if (!empty($searchLoans)): ?>
+                            <a href="index.php#section-loans" class="btn btn-secondary">Clear</a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <span>Loans List</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Search...">
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-striped table-hover mb-0" id="tableLoans">
@@ -523,10 +692,21 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                     </div>
                 </div>
 
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="POST" action="#section-sales" class="d-flex gap-2">
+                            <input type="text" class="form-control" name="search_sales" placeholder="Search sales by borrower name, book title, or date..." value="<?php echo htmlspecialchars($searchSales ?? ''); ?>">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <?php if (!empty($searchSales)): ?>
+                            <a href="index.php#section-sales" class="btn btn-secondary">Clear</a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <span>Sales List</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Search...">
                     </div>
                     <div class="card-body table-responsive">
                         <table class="table table-striped table-hover mb-0" id="tableSales">
@@ -1283,6 +1463,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     const allPublisher = <?php echo $allPublishers; ?>;
     const allBorrowers = <?php echo $allBorrowers; ?>;
     const allLoans = <?php echo $allLoans; ?>;
+    const allSales = <?php echo $allSales; ?>;
     const numTotalBooks = <?php echo $numTotalBooks; ?>;
     const numAvailableBooks = <?php echo $numAvailableBooks; ?>;
     const numTotalBorrowers = <?php echo $numTotalBorrowers; ?>;
