@@ -488,3 +488,23 @@ const tablePublisher= document.getElementById('tablePublisher');
             });
         }
     }
+
+const tableBorrowers= document.getElementById('tableBorrowers');
+    if (tableBorrowers) {
+        const tbody = tableBorrowers.querySelector('tbody');
+        if (tbody) {
+            const demoBorrowers = allBorrowers;
+            tbody.innerHTML = '';
+            demoBorrowers.forEach(b => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="borrower_id">${b.borrower_id}</span></td>
+                    <td><span class="first_name">${b.first_name}</span></td>
+                    <td><span class="last_name">${b.last_name}</span></td>
+                    <td><span class="type_id">${b.borrowertype_id}</span></td>
+                    <td><span class="contact_info">${b.contact_info}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    }
