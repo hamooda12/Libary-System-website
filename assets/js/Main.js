@@ -464,5 +464,27 @@ overlayDelete2.addEventListener('click', () => {
     overlayDelete2.style.display = "none";
 });
 
+const tablePublisher= document.getElementById('tablePublisher');
+    if (tablePublisher) {
+        const tbody = tablePublisher.querySelector('tbody');
+        if (tbody) {
+            const demoPublisher = allPublisher;
+            tbody.innerHTML = '';
+            demoPublisher.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="publisher_id">${p.publisher_id}</span></td>
+                    <td><span class="name">${p.name}</span></td>
+                    <td><span class="address">${p.address}</span></td>
+                    <td><span class="phone">${p.phone}</span></td>
+                    <td><span class="email">${p.email}</span></td>
+                    <td class="admin-only">
+                        <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${p.publisher_id}">Edit</button>
+                        <button class="btn btn-sm btn-danger btn-delete" data-id="${p.publisher_id}">Delete</button>
 
-    
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    }
