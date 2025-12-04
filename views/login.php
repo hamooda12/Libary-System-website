@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,15 +20,19 @@
         </div>
         
         <div class="login-body">
-            <div class="alert alert-danger" id="errorAlert" role="alert">
+            <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger" role="alert">
                 <i class="fas fa-exclamation-circle me-2"></i>
-                <span id="errorMessage">Invalid username or password</span>
+                <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
             </div>
+            <?php endif; ?>
             
-            <div class="alert alert-success" id="successAlert" role="alert">
+            <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success" role="alert">
                 <i class="fas fa-check-circle me-2"></i>
-                <span id="successMessage">Login successful!</span>
+                <?php echo htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
             </div>
+            <?php endif; ?>
             
             <form id="loginForm" action="../FormValidate/logindp.php" method="post">
                 <div class="form-floating">

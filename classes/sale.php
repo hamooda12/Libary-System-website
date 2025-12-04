@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 'book_id'=>$_POST['book_id'],
                 'borrower_id'=>$_POST['borrower_id'],
                 'sale_date'=>$_POST['sale_date'],
-                'price'=>$_POST['price']
+                'sale_price'=>$_POST['sale_price']
                 
           ];
           

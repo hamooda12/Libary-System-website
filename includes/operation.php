@@ -38,7 +38,6 @@ function update($table, $data, $idField, $id, $conn) {
         SET $str
         WHERE $idField = $id
      ";
-     echo $sql;
     $result = mysqli_query($conn, $sql);
     return $result;
 }

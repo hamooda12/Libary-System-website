@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,15 +18,19 @@
             <p>Join our community today</p>
         </div>
         <div class="signup-body">
-            <div class="alert alert-danger" id="errorAlert" role="alert">
+            <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger" role="alert">
                 <i class="fas fa-exclamation-circle me-2"></i>
-                <span id="errorMessage"></span>
+                <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
             </div>
+            <?php endif; ?>
             
-            <div class="alert alert-success" id="successAlert" role="alert">
+            <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success" role="alert">
                 <i class="fas fa-check-circle me-2"></i>
-                Account created successfully!
+                <?php echo htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
             </div>
+            <?php endif; ?>
             
             <form id="signupForm" action="../FormValidate/Signupdp.php" method="post">
                 <div class="mb-3">
@@ -80,12 +85,11 @@
                 </div>
                 
                 <div class="mb-4">
-                    <label for="role" class="form-label">Role</label>
+                    <label for="role" class="form-label">User Type</label>
                     <select class="form-select" id="role" required name="role">
-                        <option value="" selected disabled>Select your role</option>
-                        <option value="student">Student</option>
-                        <option value="staff">Staff</option>
-                        <option value="admin">Admin</option>
+                        <option value="" selected disabled>Select your user type</option>
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
                     </select>
                 </div>
                 

@@ -43,7 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $role;
         $_SESSION['email'] = $email;
-        header("Location: ../LibarySystem/index.php");
+        
+        // Redirect based on user type (case-insensitive check)
+        $userType = trim($role);
+        if (strcasecmp($userType, 'Admin') === 0) {
+            header("Location: ../admin/index.php");
+        } else {
+            header("Location: ../user/index.php");
+        }
         exit();
     } else {
         $_SESSION['error'] = "Error creating account. Please try again.";

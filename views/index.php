@@ -5,7 +5,10 @@ include '../classes/publisher.php';
 include '../classes/borrower.php';
 include '../classes/loan.php';
 include '../classes/sale.php';
+include '../classes/borrowertype.php';
+include '../classes/loanperiod.php';
 include '../includes/helper.php';
+include '../includes/reports.php';
 $allAuthors = JSON_ENCODE($getAllAuthors);// عشان أبعتهم للجافا سكريبت
 $allBooks = JSON_ENCODE($getAllBooks);
 $allPublishers = JSON_ENCODE($getAllPublishers);
@@ -58,6 +61,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                 <button class="btn btn-outline-light nav-button" data-target="section-sales">Sales</button>
                 <button class="btn btn-outline-light nav-button" data-target="section-reports">Reports</button>
                 <button class="btn btn-outline-light nav-button" data-target="section-programmers">Programmer Info</button>
+                <a href="search.php" class="btn btn-outline-light nav-button mt-2">Search System</a>
 
                 <button class="btn btn-danger mt-3" id="btn-logout">Log Out</button>
             </div>
@@ -546,34 +550,290 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
             <section id="section-reports" class="section-view">
                 <h2 class="section-title">Reports</h2>
 
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="card card-stat p-3">
-                            <h5>Total Value of All Books</h5>
-                            <h3 id="reportTotalBooksValue">0</h3>
-                        </div>
+                <!-- Author Reports -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Author Reports</h4>
                     </div>
+                    <div class="card-body">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-12">
+                                <h5>1. Total Number of Books for Each Author</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Author ID</th>
+                                                <th>Author Name</th>
+                                                <th>Total Books</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $authorBookCounts = getAuthorBookCounts($conn);
+                                            foreach ($authorBookCounts as $author): 
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($author['author_id']); ?></td>
+                                                <td><?php echo htmlspecialchars($author['author_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($author['total_books']); ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="col-md-6">
-                        <div class="card card-stat p-3">
-                            <h5>Books Currently Available</h5>
-                            <h3 id="reportAvailableBooksCount">0</h3>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-12">
+                                <h5>2. Total Sales/Profit of Books for Each Author</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Author ID</th>
+                                                <th>Author Name</th>
+                                                <th>Total Sales</th>
+                                                <th>Number of Sales</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $authorSales = getAuthorSalesProfit($conn);
+                                            foreach ($authorSales as $sale): 
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($sale['author_id']); ?></td>
+                                                <td><?php echo htmlspecialchars($sale['author_name']); ?></td>
+                                                <td>$<?php echo number_format($sale['total_sales'], 2); ?></td>
+                                                <td><?php echo htmlspecialchars($sale['total_sales_count']); ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <h5>3. List of All Books Written by Each Author</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Author ID</th>
+                                                <th>Author Name</th>
+                                                <th>Book ID</th>
+                                                <th>Book Title</th>
+                                                <th>Category</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $authorBooks = getAuthorBooksList($conn);
+                                            foreach ($authorBooks as $book): 
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($book['author_id']); ?></td>
+                                                <td><?php echo htmlspecialchars($book['author_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($book['book_id'] ?? 'N/A'); ?></td>
+                                                <td><?php echo htmlspecialchars($book['title'] ?? 'N/A'); ?></td>
+                                                <td><?php echo htmlspecialchars($book['category'] ?? 'N/A'); ?></td>
+                                                <td>$<?php echo $book['original_price'] ? number_format($book['original_price'], 2) : 'N/A'; ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card mt-4">
-                    <div class="card-header">Books per Category (Table)</div>
-                    <div class="card-body table-responsive">
-                        <table class="table table-striped mb-0" id="reportBooksPerCategory">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Books Count</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                <!-- Borrower Reports -->
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Borrower Reports</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-12">
+                                <h5>4. Number of Borrowed Books per Borrower</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Borrower ID</th>
+                                                <th>Borrower Name</th>
+                                                <th>Total Borrowed Books</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $borrowerCounts = getBorrowerBookCounts($conn);
+                                            foreach ($borrowerCounts as $borrower): 
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($borrower['borrower_id']); ?></td>
+                                                <td><?php echo htmlspecialchars($borrower['borrower_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($borrower['total_borrowed_books']); ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-12">
+                                <h5>5. Borrowers Who Are Late Returning Books</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Borrower ID</th>
+                                                <th>Borrower Name</th>
+                                                <th>Book Title</th>
+                                                <th>Loan Date</th>
+                                                <th>Due Date</th>
+                                                <th>Days Late</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $lateBorrowers = getLateBorrowers($conn);
+                                            if (empty($lateBorrowers)): 
+                                            ?>
+                                            <tr>
+                                                <td colspan="6" class="text-center">No late borrowers found.</td>
+                                            </tr>
+                                            <?php else: ?>
+                                            <?php foreach ($lateBorrowers as $late): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($late['borrower_id']); ?></td>
+                                                <td><?php echo htmlspecialchars($late['borrower_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($late['book_title'] ?? 'N/A'); ?></td>
+                                                <td><?php echo htmlspecialchars($late['loan_date']); ?></td>
+                                                <td><?php echo htmlspecialchars($late['due_date']); ?></td>
+                                                <td><span class="badge bg-danger"><?php echo htmlspecialchars($late['days_late']); ?> days</span></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <h5>6. Most Active Borrower</h5>
+                                <div class="table-responsive">
+                                    <?php 
+                                    $mostActive = getMostActiveBorrower($conn);
+                                    if ($mostActive): 
+                                    ?>
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Borrower ID</th>
+                                                <th>Borrower Name</th>
+                                                <th>Total Loans</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($mostActive['borrower_id']); ?></td>
+                                                <td><?php echo htmlspecialchars($mostActive['borrower_name']); ?></td>
+                                                <td><strong><?php echo htmlspecialchars($mostActive['total_loans']); ?></strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <?php else: ?>
+                                    <p class="text-muted">No borrower data available.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Reports -->
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">Sales Reports</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="card card-stat p-3">
+                                    <h5>7. Total Sum of All Sold Books</h5>
+                                    <?php 
+                                    $totalSales = getTotalSales($conn);
+                                    ?>
+                                    <h3>$<?php echo number_format($totalSales['total_sales'], 2); ?></h3>
+                                    <p class="text-muted mb-0">Total Books Sold: <?php echo $totalSales['total_books_sold']; ?></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card card-stat p-3">
+                                    <h5>8. Best-Selling Book</h5>
+                                    <?php 
+                                    $bestSeller = getBestSellingBook($conn);
+                                    if ($bestSeller): 
+                                    ?>
+                                    <h4><?php echo htmlspecialchars($bestSeller['title']); ?></h4>
+                                    <p class="text-muted mb-0">
+                                        Sales Count: <strong><?php echo $bestSeller['sales_count']; ?></strong><br>
+                                        Total Revenue: <strong>$<?php echo number_format($bestSeller['total_revenue'], 2); ?></strong>
+                                    </p>
+                                    <?php else: ?>
+                                    <p class="text-muted">No sales data available.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <h5>9. Monthly Sales Statistics</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Year</th>
+                                                <th>Month</th>
+                                                <th>Total Sales</th>
+                                                <th>Total Revenue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $monthlyStats = getMonthlySalesStats($conn);
+                                            if (empty($monthlyStats)): 
+                                            ?>
+                                            <tr>
+                                                <td colspan="4" class="text-center">No monthly sales data available.</td>
+                                            </tr>
+                                            <?php else: ?>
+                                            <?php foreach ($monthlyStats as $stat): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($stat['sale_year']); ?></td>
+                                                <td><?php echo htmlspecialchars($stat['month_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($stat['total_sales']); ?></td>
+                                                <td>$<?php echo number_format($stat['total_revenue'], 2); ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -583,13 +843,173 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                 <h2 class="section-title">Programmer Info</h2>
 
                 <div class="card p-4">
-                    <h4 class="mb-3">Developers</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item">Nizar Masalma</li>
-                        <li class="list-group-item">Saeed Awad</li>
-                        <li class="list-group-item">Hamad Tarawa</li>
-                        <li class="list-group-item">Mohammed Sadah</li>
-                    </ul>
+                    <h4 class="mb-4 text-center">Development Team</h4>
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <img src="../assets/images/profile1.png" alt="Nizar Masalma" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=NM'">
+                                    <h5 class="card-title">Nizar Masalma</h5>
+                                    <p class="card-text text-muted">Full Stack Developer specializing in PHP and JavaScript. Passionate about creating efficient and user-friendly web applications.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <img src="../assets/images/profile2.png" alt="Saeed Awad" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=SA'">
+                                    <h5 class="card-title">Saeed Awad</h5>
+                                    <p class="card-text text-muted">Backend Developer with expertise in database design and PHP. Focuses on building robust and scalable systems.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <img src="../assets/images/profile3.png" alt="Hamad Tarawa" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=HT'">
+                                    <h5 class="card-title">Hamad Tarawa</h5>
+                                    <p class="card-text text-muted">Frontend Developer skilled in HTML, CSS, and JavaScript. Dedicated to creating beautiful and responsive user interfaces.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <img src="../assets/images/profile4.png" alt="Mohammed Sadah" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=MS'">
+                                    <h5 class="card-title">Mohammed Sadah</h5>
+                                    <p class="card-text text-muted">Software Engineer with experience in system architecture and database optimization. Ensures high performance and reliability.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-borrowertypes" class="section-view">
+                <h2 class="section-title">Borrower Types</h2>
+
+                <div class="card mb-4 admin-only">
+                    <div class="card-header">Insert New Borrower Type</div>
+                    <div class="card-body">
+                        <form action="../classes/borrowertype.php" method="post">
+                            <input type="hidden" name="method" value="insertBorrowerType">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Type Name</label>
+                                    <input type="text" class="form-control" name="type_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" class="form-control" name="description">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Insert Borrower Type</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Borrower Types List</span>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-striped table-hover mb-0" id="tableBorrowerTypes">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type Name</th>
+                                    <th>Description</th>
+                                    <th class="admin-only">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $allBorrowerTypes = display('borrowertype', $conn);
+                                foreach ($allBorrowerTypes as $type): 
+                                ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($type['type_id'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($type['type_name'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($type['description'] ?? ''); ?></td>
+                                    <td class="admin-only">
+                                        <form action="../classes/borrowertype.php" method="post" style="display: inline;">
+                                            <input type="hidden" name="method" value="deleteBorrowerType">
+                                            <input type="hidden" name="type_id" value="<?php echo htmlspecialchars($type['type_id']); ?>">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this borrower type?');">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-loanperiods" class="section-view">
+                <h2 class="section-title">Loan Periods</h2>
+
+                <div class="card mb-4 admin-only">
+                    <div class="card-header">Insert New Loan Period</div>
+                    <div class="card-body">
+                        <form action="../classes/loanperiod.php" method="post">
+                            <input type="hidden" name="method" value="insertLoanPeriod">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Period Name</label>
+                                    <input type="text" class="form-control" name="period_name" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Days</label>
+                                    <input type="number" class="form-control" name="days" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" class="form-control" name="description">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Insert Loan Period</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Loan Periods List</span>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-striped table-hover mb-0" id="tableLoanPeriods">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Period Name</th>
+                                    <th>Days</th>
+                                    <th>Description</th>
+                                    <th class="admin-only">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $allLoanPeriodsData = display('loanperiod', $conn);
+                                foreach ($allLoanPeriodsData as $period): 
+                                ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($period['period_id'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($period['period_name'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($period['days'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($period['description'] ?? ''); ?></td>
+                                    <td class="admin-only">
+                                        <form action="../classes/loanperiod.php" method="post" style="display: inline;">
+                                            <input type="hidden" name="method" value="deleteLoanPeriod">
+                                            <input type="hidden" name="period_id" value="<?php echo htmlspecialchars($period['period_id']); ?>">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this loan period?');">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
