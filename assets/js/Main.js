@@ -327,12 +327,6 @@ closeForeignKeyBtn.addEventListener("click", () => {
     foreignKeyModal.style.display = "none";
 });
 
-overlayForeignKey.addEventListener('click', () => {
-    foreignKeyModal.style.display = "none";
-    overlayForeignKey.style.display = "none";
-});
-
-
 
 
     const tableAuthors = document.getElementById('tableAuthors');

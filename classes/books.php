@@ -90,5 +90,5 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteBook'){
     }
 
 
-}
+
 ?>
