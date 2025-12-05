@@ -548,4 +548,79 @@ const tableBorrowers= document.getElementById('tableBorrowers');
             });
         }
     }
+    const tablePublishers= document.getElementById('tablePublishers');
+    if (tablePublishers) {
+        const tbody = tablePublishers.querySelector('tbody');
+        if (tbody) {
+            const demoPublishers = allPublisher;
+            tbody.innerHTML = '';
+            demoPublishers.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="publisher_id">${p.publisher_id}</span></td>
+                    <td><span class="name">${p.name}</span></td>
+                    <td><span class="city">${p.city}</span></td>
+                    <td><span class="country">${p.country}</span></td>
+                    <td><span class="contact_info">${p.contact_info}</span></td>
+                    <td class="admin-only">
+                        <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${p.publisher_id}">Edit</button>
+                        <button class="btn btn-sm btn-danger btn-delete" data-id="${p.publisher_id}">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    }
+    // const modal = document.getElementById("modalBook");
+    // const overlay = document.getElementById("overlay");
+    // const closeBtn = document.querySelector(".close");
+    
+    // document.getElementById('tableBooks').addEventListener('click', (e) => {
+    //     if (e.target && e.target.classList.contains('btn-edit')) {
+    //         const bookId = e.target.getAttribute('data-id');
+    //         document.getElementById('bookId').value = bookId;
+    //         console.log("Editing book ID:",  e.target.getAttribute('data-id'));
+    //         modal.style.display = 'block';
+    //         overlay.style.display = 'block';
+    //     }
+    // });
+    
+    
+    
+    // closeBtn.addEventListener('click', () => {
+    //     modal.style.display = "none";
+    //     overlay.style.display = "none";
+    // });
+    
+    // overlay.addEventListener('click', () => {
+    //     modal.style.display = "none";
+    //     overlay.style.display = "none";
+    // });
+    // const overlayDelete = document.getElementById("overlayDelete");
+    // const modalDeleteBook = document.getElementById("modalDeleteBook");
+    // const closeModalDeleteBtn = document.getElementById("closeModalDeleteBook");
+    // const btnCancelDelete = document.getElementById("btnCancelDelete");
+    
+    // document.getElementById('tableBooks').addEventListener('click', (e) => {
+    //     if (e.target && e.target.classList.contains('btn-delete')) {
+    //         const bookId = e.target.getAttribute('data-id');
+    //         document.getElementById('deleteBookId').value = bookId;
+    //         modalDeleteBook.style.display = 'block';
+    //         overlayDelete.style.display = 'block';
+    //     }
+    // });
+    
+    // closeModalDeleteBtn.addEventListener('click', () => {
+    //     modalDeleteBook.style.display = "none";
+    //     overlayDelete.style.display = "none";
+    // });
+    // btnCancelDelete.addEventListener('click', () => {
+    //     modalDeleteBook.style.display = "none";
+    //     overlayDelete.style.display = "none";
+    // });
+    
+    // overlayDelete.addEventListener('click', () => {
+    //     modalDeleteBook.style.display = "none";
+    //     overlayDelete.style.display = "none";
+    // });
     

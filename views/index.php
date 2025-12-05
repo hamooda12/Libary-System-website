@@ -241,6 +241,12 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
         </div>
     </form>
 </div>
+<div id="forginkey" class="modal-error" style="display: none;">
+    <span id="closeForkinkey" class="close">&times;</span>
+    <h2>Foreign Key Error</h2>
+    <p>Please try again. The Foreign Key does not exist. Recheck the ID.</p>
+</div>
+
 <div id="publisherModel" class="modal-error" style="display: none;">
     <span id="closePublisherModal" class="close">&times;</span>
     <h2>Wrong Publisher ID</h2>

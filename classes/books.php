@@ -37,7 +37,19 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 else if(isset($_POST['method']) && $_POST['method']=='deleteBook'){
     // ($table, $field, $id, $conn)
     $book_id=$_POST['book_id'];
+    
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = 'book' AND REFERENCED_COLUMN_NAME = 'book_id' AND TABLE_SCHEMA = '$db'";
+    $result = mysqli_query($conn, $sql);
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        $table = $row['TABLE_NAME'];
+        $column = $row['COLUMN_NAME'];
+        header("Location: ../views/index.php?foreign_key_error=$table,$column#section-books");
+        exit();
+    }
+    }
     $deleteBook=delete('book','book_id',$book_id,$conn);
+    
     if($deleteBook){
         header("Location: ../views/index.php#section-books");
         exit();
