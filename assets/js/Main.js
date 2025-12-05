@@ -634,3 +634,46 @@ const tableBorrowers= document.getElementById('tableBorrowers');
     //     modalDeleteBook.style.display = "none";
     //     overlayDelete.style.display = "none";
     // });
+const modelPublisher= document.getElementById("modalPublisher");
+const overlayPublisher= document.getElementById("overlayPublisher");
+const closeModalPublisher= document.getElementById("closeModalPublisher");
+document.getElementById('tablePublishers').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-edit')) {
+        const publisherId = e.target.getAttribute('data-id');
+        document.getElementById('publisherId').value = publisherId;
+        console.log("Editing publisher ID:",  e.target.getAttribute('data-id'));
+        modelPublisher.style.display = 'block';
+        overlayPublisher.style.display = 'block';
+    }
+});
+closeModalPublisher.addEventListener('click', () => {
+    modelPublisher.style.display = "none";
+    overlayPublisher.style.display = "none";
+});
+overlayPublisher.addEventListener('click', () => {
+    modelPublisher.style.display = "none";
+    overlayPublisher.style.display = "none";
+});
+const modalDeletePublisher= document.getElementById("modalDeletePublisher");
+const closeModalDeletePublisher= document.getElementById("closeModalDeletePublisher");
+const btnCancelDeletePublisher= document.getElementById("btnCancelDeletePublisher");
+document.getElementById('tablePublishers').addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('btn-delete')) {
+        const publisherId = e.target.getAttribute('data-id');
+        document.getElementById('deletePublisherId').value = publisherId;
+        modalDeletePublisher.style.display = 'block';
+        overlayDeletePublisher.style.display = 'block';
+    }
+});
+closeModalDeletePublisher.addEventListener('click', () => {
+    modalDeletePublisher.style.display = "none";
+    overlayDeletePublisher.style.display = "none";
+});
+btnCancelDeletePublisher.addEventListener('click', () => {
+    modalDeletePublisher.style.display = "none";
+    overlayDeletePublisher.style.display = "none";
+});
+overlayDeletePublisher.addEventListener('click', () => {
+    modalDeletePublisher.style.display = "none";
+    overlayDeletePublisher.style.display = "none";
+});
