@@ -242,9 +242,9 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     </form>
 </div>
 <div id="forginkey" class="modal-error" style="display: none;">
-    <span id="closeForkinkey" class="close">&times;</span>
+    <span id="closePublisherModal" class="close">&times;</span>
     <h2>Foreign Key Error</h2>
-    <p>Please try again. The Foreign Key does not exist. Recheck the ID.</p>
+    <p>Please try again. The Foreign Key is used in another table. Recheck the ID.</p>
 </div>
 
 <div id="publisherModel" class="modal-error" style="display: none;">
@@ -1483,9 +1483,17 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
 <script src="../assets/js/Main.js"></script>
 </body>
 <?php if(isset($_GET['publisher_error'])): ?>
+    
 <script>
     document.getElementById('publisherModel').style.display = 'block';
+    document.getElementById('forginkey').style.display = 'block';
+
 </script>
 <?php endif; ?>
+<?php if(isset($_GET['foreign_key_error'])): ?>
 
+<script>
+    document.getElementById('forginkey').style.display = 'block';
+</script>
+<?php endif; ?>
 </html>

@@ -275,7 +275,7 @@ body.role-student .btn-delete {
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
     animation: fadeIn 0.2s ease;
 }
-.modal-error {
+.modal-error, #forginkey {
     position: fixed;
     top: 20%;
     left: 50%;
