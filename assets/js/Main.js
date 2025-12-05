@@ -320,6 +320,17 @@ const closePublisherBtn = document.getElementById("closePublisherModal");
 closePublisherBtn.addEventListener("click", () => {
     publisherModal.style.display = "none";
 });
+const foreignKeyModal = document.getElementById("forginkey");
+const closeForeignKeyBtn = document.getElementById("closePforginkey");
+
+closeForeignKeyBtn.addEventListener("click", () => {
+    foreignKeyModal.style.display = "none";
+});
+
+overlayForeignKey.addEventListener('click', () => {
+    foreignKeyModal.style.display = "none";
+    overlayForeignKey.style.display = "none";
+});
 
 
 
@@ -623,4 +634,3 @@ const tableBorrowers= document.getElementById('tableBorrowers');
     //     modalDeleteBook.style.display = "none";
     //     overlayDelete.style.display = "none";
     // });
-    

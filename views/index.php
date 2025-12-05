@@ -242,7 +242,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     </form>
 </div>
 <div id="forginkey" class="modal-error" style="display: none;">
-    <span id="closePublisherModal" class="close">&times;</span>
+    <span id="closePforginkey" class="close">&times;</span>
     <h2>Foreign Key Error</h2>
     <p>Please try again. The Foreign Key is used in another table. Recheck the ID.</p>
 </div>
