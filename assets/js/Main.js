@@ -508,3 +508,44 @@ const tableBorrowers= document.getElementById('tableBorrowers');
             });
         }
     }
+    const tableLoans= document.getElementById('tableLoans');
+    if (tableLoans) {
+        const tbody = tableLoans.querySelector('tbody');
+        if (tbody) {
+            const demoLoans = allLoans;
+            tbody.innerHTML = '';
+            demoLoans.forEach(l => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="loan_id">${l.loan_id}</span></td>
+                    <td><span class="borrower_id">${l.borrower_id}</span></td>
+                    <td><span class="book_id">${l.book_id}</span></td>
+                    <td><span class="period_id">${l.period_id}</span></td>
+                    <td><span class="loan_date">${l.loan_date}</span></td>
+                    <td><span class="due_date">${l.due_date}</span></td>
+                    <td><span class="return_date">${l.return_date}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    }
+    const tableSales= document.getElementById('tableSales');
+    if (tableSales) {
+        const tbody = tableSales.querySelector('tbody');
+        if (tbody) {
+            const demoSales = allSales;
+            tbody.innerHTML = '';
+            demoSales.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="sale_id">${s.sale_id}</span></td>
+                    <td><span class="borrower_id">${s.borrower_id}</span></td>
+                    <td><span class="book_id">${s.book_id}</span></td>
+                    <td><span class="sale_date">${s.sale_date}</span></td>
+                    <td><span class="sale_price">${s.sale_price}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    }
+    
