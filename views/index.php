@@ -1034,16 +1034,16 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                         <div class="col-md-6 col-lg-3">
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile1.png" alt="Nizar Masalma" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=NM'">
+                                    <img src="../assets/images/profile1.png" alt="Nizar Masalma" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                                     <h5 class="card-title">Nizar Masalma</h5>
-                                    <p class="card-text text-muted">Full Stack Developer specializing in PHP and JavaScript. Passionate about creating efficient and user-friendly web applications.</p>
+                                    <p class="card-text text-muted">Frontend Developer and simulator of the project. Creating the frontend of the project and the simulator.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile2.png" alt="Saeed Awad" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=SA'">
+                                    <img src="../assets/images/profile2.png" alt="Saeed Awad" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" >
                                     <h5 class="card-title">Saeed Awad</h5>
                                     <p class="card-text text-muted">Backend Developer with expertise in database design and PHP. Focuses on building robust and scalable systems.</p>
                                 </div>
@@ -1052,16 +1052,16 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                         <div class="col-md-6 col-lg-3">
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile3.png" alt="Hamad Tarawa" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=HT'">
+                                    <img src="../assets/images/profile3.png" alt="Hamad Tarawa" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                                     <h5 class="card-title">Hamad Tarawa</h5>
-                                    <p class="card-text text-muted">Frontend Developer skilled in HTML, CSS, and JavaScript. Dedicated to creating beautiful and responsive user interfaces.</p>
+                                    <p class="card-text text-muted">full stack developer. Creating the backend of the project and the database.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile4.png" alt="Mohammed Sadah" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/150?text=MS'">
+                                    <img src="../assets/images/profile4.png" alt="Mohammed Sadah" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" >
                                     <h5 class="card-title">Mohammed Sadah</h5>
                                     <p class="card-text text-muted">Software Engineer with experience in system architecture and database optimization. Ensures high performance and reliability.</p>
                                 </div>
