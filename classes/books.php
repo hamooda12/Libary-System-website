@@ -34,29 +34,63 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         exit();
     }
    }}
-else if(isset($_POST['method']) && $_POST['method']=='deleteBook'){
-    // ($table, $field, $id, $conn)
-    $book_id=$_POST['book_id'];
-    
-    $sql = "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_NAME = 'book' AND REFERENCED_COLUMN_NAME = 'book_id' AND TABLE_SCHEMA = '$db'";
-    $result = mysqli_query($conn, $sql);
-    if(mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_assoc($result);
+else if(isset($_POST['method']) && $_POST['method']=='deleteBook') {
+
+    $book_id = $_POST['book_id'];
+
+    // 1) Get all tables that reference 'book.book_id'
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME 
+            FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE 
+            WHERE REFERENCED_TABLE_NAME = 'book'
+            AND REFERENCED_COLUMN_NAME = 'book_id'
+            AND TABLE_SCHEMA = ?";
+
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $db);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $blockingTables = [];
+
+   
+    while($row = mysqli_fetch_assoc($result)) {
         $table = $row['TABLE_NAME'];
         $column = $row['COLUMN_NAME'];
-        header("Location: ../views/index.php?foreign_key_error=$table,$column#section-books");
+
+        $checkSql = "SELECT COUNT(*) AS cnt FROM `$table` WHERE `$column` = ?";
+        $checkStmt = mysqli_prepare($conn, $checkSql);
+        mysqli_stmt_bind_param($checkStmt, "i", $book_id);
+        mysqli_stmt_execute($checkStmt);
+        $checkResult = mysqli_stmt_get_result($checkStmt);
+        $countRow = mysqli_fetch_assoc($checkResult);
+
+        if ($countRow['cnt'] > 0) {
+           
+            $blockingTables[] = "$table.$column";
+        }
+    }
+
+    
+    if (!empty($blockingTables)) {
+        $fkString = implode(", ", $blockingTables);
+        header("Location: ../views/index.php?foreign_key_error=$fkString#section-books");
         exit();
     }
-    }
-    $deleteBook=delete('book','book_id',$book_id,$conn);
-    
-    if($deleteBook){
+
+
+    $deleted = delete('book', 'book_id', $book_id, $conn);
+
+    if ($deleted) {
         header("Location: ../views/index.php#section-books");
         exit();
+    } else {
+        header("Location: ../views/index.php?delete_error=failed#section-books");
+        exit();
     }
-    else{
-        echo "Error deleting book.";
-    }  }
+}
+
+    
+     
     else if(isset($_POST['method']) && $_POST['method']=='insertBook'){
         $data=[
             'title'=>$_POST['title'],
@@ -88,7 +122,7 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteBook'){
         }
        }
     }
-
+}
 
 
 ?>

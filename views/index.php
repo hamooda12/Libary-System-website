@@ -1487,18 +1487,5 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     </script>
 <script src="../assets/js/Main.js"></script>
 </body>
-<?php if(isset($_GET['publisher_error'])): ?>
     
-<script>
-    document.getElementById('publisherModel').style.display = 'block';
-    document.getElementById('forginkey').style.display = 'block';
-
-</script>
-<?php endif; ?>
-<?php if(isset($_GET['foreign_key_error'])): ?>
-
-<script>
-    document.getElementById('forginkey').style.display = 'block';
-</script>
-<?php endif; ?>
 </html>

@@ -10,7 +10,7 @@ for (let i = 0; i < togglePassword.length; i++) {
         }       
     });
 }
-const error=document.getElementsByClassName(error)[0]
+const error=document.getElementsByClassName("error")
 if(Notcorrectuser){
     error.innerHTML=`<p>Invalied userName or password please try again</p>`
 }
