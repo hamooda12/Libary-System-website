@@ -12,6 +12,7 @@ include '../includes/reports.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 $originalBooks = $getAllBooks;
 $originalBorrowers = $getAllBorrowers;
 $username=isset($_SESSION['username']) ? $_SESSION['username'] : 'user';
@@ -30,7 +31,11 @@ if (!empty($searchBooks)) {
     foreach ($getAllBooks as $book) {
         if (stripos($book['title'], $searchBooks) !== false || 
             stripos($book['category'], $searchBooks) !== false || 
-            stripos($book['book_type'], $searchBooks) !== false) {
+            stripos($book['book_type'], $searchBooks) !== false)||
+            stripos(((string)$book['origin_price'], $searchBooks) !== false ||
+            strtolower($searchBooks) === 'yes' && $book['avalibale'] == 1
+                 ||strtolower($searchBooks) === 'no' && $book['avalibale'] == 0)
+            {
             $filteredBooks[] = $book;
         }
     }
@@ -1498,7 +1503,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('closePforginkey').onclick = function () {
                 fkModal.style.display = 'none';
                 // Remove query string from URL
-                window.location.search = '';
+              
             };
         }
     }
