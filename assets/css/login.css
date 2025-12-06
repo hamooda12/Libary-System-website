@@ -72,6 +72,27 @@
              transition: all 0.3s;
             
         }
+        .error-popup {
+    position: fixed;
+    top: 20px;
+    right: -400px;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: right 0.4s ease;
+    z-index: 99999;
+}
+
+.error-popup.show {
+    right: 20px;
+}
+
         .signLink:focus,.signLink:hover, .signLink:visited,.signLink:link, .signLink:active {
             text-decoration: none;
             color: black;

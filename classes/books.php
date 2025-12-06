@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     
     else{
         echo "Error updating book.";
-        header("Location: ../views/index.php#section-books");
+        header("Location: ..views/index.php.php#section-books");
         exit();
     }
    }}

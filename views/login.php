@@ -1,7 +1,15 @@
-<?php session_start(); 
+<?php 
 
-$NotCorrectUser=isset($_SESSION['error']);
+session_start();
+
+$NotCorrectUser = isset($_SESSION['error']);
+$errorMessage = $_SESSION['error'] ?? '';
+
+unset($_SESSION['error']); 
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,11 +41,13 @@ $NotCorrectUser=isset($_SESSION['error']);
                 </div>
                 
                 <div class="form-floating password-container">
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
-                    <label for="password"><i class="fas fa-key me-2"></i>Password</label>
-                    <span class="password-toggle" id="togglePassword">
-                        <i class="fas fa-eye-slash"></i>
-                    </span>
+                 <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+<label for="password"><i class="fas fa-key me-2"></i>Password</label>
+
+<span class="password-toggle" id="togglePassword">
+    <i class="fas fa-eye"></i>
+</span>
+
                 </div>
                 
                 <div class="form-check mb-3">
@@ -47,10 +57,21 @@ $NotCorrectUser=isset($_SESSION['error']);
                     </label>
                 </div>
 
-                <p class="error">
+    <div id="errorPopup" class="error-popup">
+  <span id="errorMessage" style="
+    color: #c53030;
+    padding: 0.875rem 1rem;
+   
+    margin: 1rem 0;
+    font-weight: 500;
+    font-size: 0.95rem;
+    animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+   ">
+    <?php echo htmlspecialchars($errorMessage); ?>
+</span>
 
+</div>
 
-                </p>
 
                 <button type="submit" class="btn btn-login" id="loginBtn">
                     <i class="fas fa-sign-in-alt me-2"></i>Log In
@@ -81,9 +102,7 @@ $NotCorrectUser=isset($_SESSION['error']);
             </div>
         </div>
     </div>
-    <script>
-        const NotCorrectUser = <?php echo $NotCorrectUser; ?>;
-    </script>
+ 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>

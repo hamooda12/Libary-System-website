@@ -31,7 +31,7 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteAuthor'){
     $author_id=$_POST['author_id'];
     $deleteAuthor=delete('author','author_id',$author_id,$conn);
     if($deleteAuthor){
-        header("Location: ../views/index.php#section-authors");
+        header("Location: ../LibarySystem/login.php#section-authors");
         exit();
     }
     else{

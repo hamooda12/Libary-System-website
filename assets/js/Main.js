@@ -161,11 +161,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const tbody = tableBooks.querySelector('tbody');
         if (tbody) {
             const demoBooks =allBooks;
-
+ console.log(role)
             tbody.innerHTML = '';
             demoBooks.forEach(book => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
+
+                if(role==="admin"){
+                    tr.innerHTML= `
                     <td>${book.book_id}</td>
                     <td>${book.title}</td>
                     <td>${book.publisher_id}</td>
@@ -178,12 +180,23 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="btn btn-sm btn-danger btn-delete" data-id="${book.book_id}">Delete</button>
                     </td>
                 `;
+                }
+                else{
+                tr.innerHTML = `
+                    <td>${book.book_id}</td>
+                    <td>${book.title}</td>
+                    <td>${book.publisher_id}</td>
+                    <td>${book.category}</td>
+                    <td>${book.book_type}</td>
+                    <td>${book.original_price}</td>
+                    <td>${book.available >0?'Yes' : 'No'}</td>
+                `;}
                 tbody.appendChild(tr);
             });
         }}
         let str = '';
         for(let publisher of allPublisher) {
-            console.log(publisher);
+        
             str += `<option value="${publisher.publisher_id}">${publisher.name}</option>`;
         }
         let selectPublisher = document.getElementById('publisherSelect');
@@ -192,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
 let selectborrowerType = document.getElementById('borrowerTypeSelect');
         let str2 = '';
         for(let borrowerType of allBorrowersTypes) {
-            console.log(borrowerType);
+          
             str2 += `<option value="${borrowerType.type_id}">${borrowerType.type_name}</option>`;
         }
         selectborrowerType.innerHTML = `<select class="form-select" name="type_id" id="borrowerTypeSelect">` +
@@ -200,7 +213,7 @@ let selectborrowerType = document.getElementById('borrowerTypeSelect');
 let selectLoanBorrower = document.getElementById('LoanBorrowerTypeSelect');
         let str3 = '';
         for(let borrower of allBorrowers) {
-            console.log(borrower);
+          
             str3 += `<option value="${borrower.borrower_id}">${borrower.first_name} ${borrower.last_name}</option>`;
         }
         selectLoanBorrower.innerHTML = `<select class="form-select" name="borrower_id" id="LoanBorrowerTypeSelect">` +
@@ -208,7 +221,7 @@ let selectLoanBorrower = document.getElementById('LoanBorrowerTypeSelect');
 let selectLoanBook = document.getElementById('LoanBookTypeSelect');
         let str4 = '';
         for(let book of allBooks) {
-            console.log(book);
+           
             str4 += `<option value="${book.book_id}">${book.title}</option>`;
         }
         selectLoanBook.innerHTML = `<select class="form-select" name="book_id" id="LoanBookTypeSelect">` +
@@ -216,7 +229,7 @@ let selectLoanBook = document.getElementById('LoanBookTypeSelect');
 let selectLoanPeriod = document.getElementById('LoanPeriodTypeSelect');
         let str5 = '';
         for(let period of allLoanPeriods) {
-            console.log(period);
+            
             str5 += `<option value="${period.period_id}">${period.period_name}</option>`;
         }
         selectLoanPeriod.innerHTML = `<select class="form-select" name="period_id" id="LoanPeriodTypeSelect">` +
@@ -224,7 +237,7 @@ let selectLoanPeriod = document.getElementById('LoanPeriodTypeSelect');
 let selectSaleBook = document.getElementById('SaleBookList');
         let str6 = '';
         for(let book of allNotsoldBooks) {
-            console.log(book);
+            
             str6 += `<option value="${book.book_id}">${book.title}</option>`;
         }
         selectSaleBook.innerHTML = `<select class="form-select" name="book_id" id="SaleBookList">` +
@@ -232,7 +245,7 @@ let selectSaleBook = document.getElementById('SaleBookList');
 let selectSaleBorrower = document.getElementById('SaleBorrowerList');
         let str7 = '';
         for(let borrower of allBorrowers) {
-            console.log(borrower);
+        
             str7 += `<option value="${borrower.borrower_id}">${borrower.first_name} ${borrower.last_name}</option>`;
         }   
         selectSaleBorrower.innerHTML = `<select class="form-select" name="borrower_id" id="SaleBorrowerList">` +
@@ -315,8 +328,9 @@ closeForeignKeyBtn.addEventListener("click", () => {
             tbody.innerHTML = '';
             demoAuthors.forEach(a => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><span class="author_id">${a.author_id}</span></td>
+                if(role==='admin'){
+                    tr.innerHTML=`
+                      <td><span class="author_id">${a.author_id}</span></td>
                     <td><span class="first_name">${a.first_name}</span></td>
                     <td><span class="last_name">${a.last_name}</span></td>
                     <td><span class="country">${a.country}</span></td>
@@ -325,7 +339,14 @@ closeForeignKeyBtn.addEventListener("click", () => {
                         <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${a.author_id}">Edit</button>
                         <button class="btn btn-sm btn-danger btn-delete" data-id="${a.author_id}">Delete</button>
                     </td>
-                `;
+                `
+                }
+                tr.innerHTML = `
+                    <td><span class="author_id">${a.author_id}</span></td>
+                    <td><span class="first_name">${a.first_name}</span></td>
+                    <td><span class="last_name">${a.last_name}</span></td>
+                    <td><span class="country">${a.country}</span></td>
+                    <td><span class="bio">${a.bio}</span></td>`;
                 tbody.appendChild(tr);
             });
         }
@@ -454,8 +475,8 @@ const tablePublisher= document.getElementById('tablePublisher');
             tbody.innerHTML = '';
             demoPublisher.forEach(p => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><span class="publisher_id">${p.publisher_id}</span></td>
+                if(role==='admin'){
+                    tr.innerHTML=` <td><span class="publisher_id">${p.publisher_id}</span></td>
                     <td><span class="name">${p.name}</span></td>
                     <td><span class="address">${p.address}</span></td>
                     <td><span class="phone">${p.phone}</span></td>
@@ -464,7 +485,14 @@ const tablePublisher= document.getElementById('tablePublisher');
                         <button class="btn btn-sm btn-warning me-1 btn-edit" data-id="${p.publisher_id}">Edit</button>
                         <button class="btn btn-sm btn-danger btn-delete" data-id="${p.publisher_id}">Delete</button>
 
-                    </td>
+                    </td>`
+                }
+                tr.innerHTML = `
+                    <td><span class="publisher_id">${p.publisher_id}</span></td>
+                    <td><span class="name">${p.name}</span></td>
+                    <td><span class="address">${p.address}</span></td>
+                    <td><span class="phone">${p.phone}</span></td>
+                    <td><span class="email">${p.email}</span></td>
                 `;
                 tbody.appendChild(tr);
             });

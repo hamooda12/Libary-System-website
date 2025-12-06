@@ -1,4 +1,12 @@
-<?php session_start(); ?>
+<?php session_start(); 
+
+
+$NotCorrectUser = isset($_SESSION['error']);
+$errorMessage = $_SESSION['error'] ?? '';
+
+unset($_SESSION['error']); 
+?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,10 +98,16 @@
                         <option value="" selected disabled>Select your user type</option>
                         <option value="admin">Admin</option>
                         <option value="user">User</option>
-                         <option value="staff">User</option>
+                         <option value="staff">Staff</option>
                     </select>
                 </div>
-                
+                <p style="  color: #c53030;
+    padding: 0.875rem 1rem;
+   
+    margin: 1rem 0;
+    font-weight: 500;
+    font-size: 0.95rem;
+    animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);"><?php echo htmlspecialchars($errorMessage); ?></p>
                 <button type="submit" class="btn btn-signup">Sign Up</button>
                 <a href="Login.php"><button type="button" class="btn btn-back" id="backButton">Back to Login</button></a>
             </form>

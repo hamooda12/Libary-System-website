@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $role;
         $_SESSION['email'] = $email;
-header('Location: ../views/login.php');
+header('Location: ../views/index.php');
         exit();
     }
 

@@ -1,16 +1,14 @@
-let passwordInput=document.getElementById("password");
-let togglePassword=document.getElementsByClassName("password-toggle");
-for (let i = 0; i < togglePassword.length; i++) {
-    togglePassword[i].addEventListener("click", function(){
-        this.querySelector("i").classList.toggle("fas fa-eye");
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-        } else {
-            passwordInput.type = "password";
-        }       
-    });
-}
-const error=document.getElementsByClassName("error")
-if(Notcorrectuser){
-    error.innerHTML=`<p>Invalied userName or password please try again</p>`
-}
+
+let passwordInput = document.getElementById("password");
+let togglePassword = document.getElementById("togglePassword");
+
+togglePassword.addEventListener('click', function() {
+    
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+
+    this.querySelector("i").classList.toggle("fa-eye");
+    this.querySelector("i").classList.toggle("fa-eye-slash");
+});
+

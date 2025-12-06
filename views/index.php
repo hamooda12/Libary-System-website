@@ -1,4 +1,6 @@
 <?php
+
+
 session_start();
 $username = $_SESSION['username'] ?? '';
 $role = $_SESSION['role'] ?? '';
@@ -191,8 +193,8 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                 <button class="btn btn-outline-light nav-button" data-target="section-sales">Sales</button>
                 <button class="btn btn-outline-light nav-button" data-target="section-reports">Reports</button>
                 <button class="btn btn-outline-light nav-button" data-target="section-programmers">Programmer Info</button>
+<a class="btn btn-danger mt-3" href="login.php">Log Out</a>
 
-                <button class="btn btn-danger mt-3" id="btn-logout" href="login.php">Log Out</button>
             </div>
 
             <div class="mt-auto pt-3 small text-secondary text-center">
@@ -1043,45 +1045,41 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
             <section id="section-programmers" class="section-view">
                 <h2 class="section-title">Programmer Info</h2>
 
-                <div class="card p-4">
-                    <h4 class="mb-4 text-center">Development Team</h4>
-                    <div class="row g-4">
-                        <div class="col-md-6 col-lg-3">
-                            <div class="card h-100 shadow-sm">
+                <div class="card p-4 programmers" >
+                    <h4 class="mb-4 text-center header">Development Team</h4>
+                    <div class="row">
+                         <div class="col-md-5 col-lg-3">
+                            <div class="card h-70 shadow-sm">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile1.png" alt="Nizar Masalma" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                                    <h5 class="card-title">Nizar Masalma</h5>
-                                    <p class="card-text text-muted">Frontend Developer and simulator of the project. Creating the frontend of the project and the simulator.</p>
+                                  
+                                    <p class="card-text text-muted">Software Engineer with experience in system architecture and database optimization. Ensures high performance and reliability.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="card h-100 shadow-sm">
+                        <div class="col-md-5 col-lg-2">
+                            <div class="card h-70 shadow-sm">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile2.png" alt="Saeed Awad" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" >
-                                    <h5 class="card-title">Saeed Awad</h5>
+                                   
                                     <p class="card-text text-muted">Backend Developer with expertise in database design and PHP. Focuses on building robust and scalable systems.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="card h-100 shadow-sm">
+                            <div class="card h-70 shadow-sm">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile3.png" alt="Hamad Tarawa" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                                    <h5 class="card-title">Hamad Tarawa</h5>
+                                  
                                     <p class="card-text text-muted">full stack developer. Creating the backend of the project and the database.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="card h-100 shadow-sm">
+                         <div class="col-md-6 col-lg-3">
+                            <div class="card h-70 shadow-sm ">
                                 <div class="card-body text-center">
-                                    <img src="../assets/images/profile4.png" alt="Mohammed Sadah" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" >
-                                    <h5 class="card-title">Mohammed Sadah</h5>
-                                    <p class="card-text text-muted">Software Engineer with experience in system architecture and database optimization. Ensures high performance and reliability.</p>
+                                    <p class="card-text text-muted">Frontend Developer and simulator of the project. Creating the frontend of the project and the simulator.</p>
                                 </div>
                             </div>
                         </div>
+                       
                     </div>
                 </div>
             </section>
@@ -1494,12 +1492,15 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     const allBorrowersTypes = <?php echo $getAllBorrowersTypes; ?>;
     const allLoanPeriods = <?php echo $getAllLoanPeriods; ?>;
     const allNotsoldBooks = <?php echo $getAllnotsoldBooks; ?>;
+     const role = '<?php echo $role; ?>';
    
+    const inserts = document.getElementsByClassName('admin-only');
 
-    </script>
-    <script>
-// Display modal if foreign key or publisher error
-document.addEventListener('DOMContentLoaded', function () {
+    for (let i = 0; i < inserts.length; i++) {
+        inserts[i].style.display = role === 'admin' ? 'block' : 'none';
+
+    }
+    document.addEventListener('DOMContentLoaded', function () {
     // Check for foreign key error in query string
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('foreign_key_error')) {
@@ -1526,16 +1527,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+   
 
-</script>
-<script>
-    const role = '<?php echo $role; ?>';
-    const inserts = document.getElementsByClassName('admin-only');
+    </script>
 
-    for (let i = 0; i < inserts.length; i++) {
-        inserts[i].style.display = role === 'admin' ? 'block' : 'none';
-    }
-</script>
+
 <script src="../assets/js/Main.js"></script>
 
 </body>

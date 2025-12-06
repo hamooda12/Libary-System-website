@@ -34,14 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userType = trim($user['role']);
                 header('Location: ../views/index.php');
             exit();
-        } else {
+        }
+         else{
+        
             $_SESSION['error'] = "Invalid password Or userName";
             header('Location: ../views/login.php');
             exit();
-        }
+        
+    } 
     }
+   
 
-header('Location: ../views/login.php');
-exit();
+
 }
 ?>

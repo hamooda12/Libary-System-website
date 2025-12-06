@@ -8,7 +8,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $data=[
         'first_name'=>$_POST['first_name'],
         'last_name'=>$_POST['last_name'],
-        'type_id'=>$_POST['type_id'],
+        'borrowertype_id'=>$_POST['type_id'],
         'contact_info'=>$_POST['contact_info']
         
     ];
@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     
     else{
         echo "Error updating borrower.";
-        header("Location: ../views/index.php#section-authors");
+        header("Location: ../views/index.php#section-borrower");
         exit();
     }
    }
@@ -41,7 +41,7 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteBorrower'){
         $data=[
             'first_name'=>$_POST['first_name'],
             'last_name'=>$_POST['last_name'],
-            'type_id'=>$_POST['type_id'],
+            'borrowertype_id'=>$_POST['type_id'],
             'contact_info'=>$_POST['contact_info']
             
         ];

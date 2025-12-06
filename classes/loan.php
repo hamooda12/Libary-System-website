@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $loan_id=$_POST['loan_id'];
     $data=[
         'book_id'=>$_POST['book_id'],
-        'period_id'=>$_POST['period_id'],
+        'loanperiod_id'=>$_POST['period_id'],
         'loan_date'=>$_POST['loan_date'],
         'due_date'=>$_POST['due_date'],
         'return_date'=>$_POST['return_date']
@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     
     $updateLoan=update('loan',$data,'loan_id',$loan_id,$conn);
     if($updateLoan){
-        header("Location: ../views/index.php#section-loan");
+        header("Location: ..views/index.php#section-loan");
         exit();
     }
      
@@ -43,7 +43,7 @@ else if(isset($_POST['method']) && $_POST['method']=='deleteLoan'){
         $data=[
             'borrower_id'=>$_POST['borrower_id'],
             'book_id'=>$_POST['book_id'],
-            'period_id'=>$_POST['period_id'],
+            'loanperiod_id'=>$_POST['period_id'],
             'loan_date'=>$_POST['loan_date'],
             'due_date'=>$_POST['due_date'],
             'return_date'=>$_POST['return_date']
