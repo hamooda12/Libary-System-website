@@ -318,7 +318,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
 
             <section id="section-books" class="section-view">
                 <h2 class="section-title">Books</h2>
-
+    
                 <div class="card mb-4 admin-only">
                     <div class="card-header">Insert New Book</div>
                     <div class="card-body">
@@ -1526,8 +1526,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
+</script>
+<script>
+    const role = '<?php echo $role; ?>';
+    const inserts = document.getElementsByClassName('admin-only');
+
+    for (let i = 0; i < inserts.length; i++) {
+        inserts[i].style.display = role === 'admin' ? 'block' : 'none';
+    }
 </script>
 <script src="../assets/js/Main.js"></script>
+
 </body>
     
 </html>
