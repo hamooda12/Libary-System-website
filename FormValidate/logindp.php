@@ -1,25 +1,33 @@
 <?php
 require '../includes/db.php';
 session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    
-    if(empty($username) || empty($password)){
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($email === '' || $password === '') {
         $_SESSION['error'] = "Please fill in all fields.";
         header('Location: ../views/login.php');
         exit();
     }
-    
-    $sql = "SELECT * FROM user WHERE username = ?";
+
+    $sql = "SELECT username, email, password, role FROM user WHERE email = ? LIMIT 1";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $username);
 
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if ($stmt === false) {
+        $_SESSION['error'] = "Unable to process your request. Please try again.";
+        header('Location: ../views/login.php');
+        exit();
+    }
 
-    if ($result->num_rows === 1) {
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result && $result->num_rows === 1) {
         $user = $result->fetch_assoc();
+
         if (password_verify($password, $user['password'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
@@ -33,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $stmt->close();
-    $conn->close();
+header('Location: ../views/login.php');
+exit();
 }
 ?>

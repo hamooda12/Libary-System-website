@@ -28,8 +28,8 @@ $NotCorrectUser=isset($_SESSION['error']);
             
             <form id="loginForm" action="../FormValidate/logindp.php" method="post">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
-                    <label for="username"><i class="fas fa-user me-2"></i>Username</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
+                    <label for="email"><i class="fas fa-envelope me-2"></i>Email</label>
                 </div>
                 
                 <div class="form-floating password-container">

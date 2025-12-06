@@ -1,4 +1,8 @@
 <?php
+session_start();
+$username = $_SESSION['username'] ?? '';
+$role = $_SESSION['role'] ?? '';
+
 include '../classes/author.php';
 include '../classes/books.php';
 include '../classes/publisher.php';
@@ -30,12 +34,13 @@ if (!empty($searchBooks)) {
     $filteredBooks = [];
     foreach ($getAllBooks as $book) {
         if (
-            stripos($book['title'], $searchBooks) !== false
-            stripos($book['category'], $searchBooks) !== false || 
-            stripos($book['book_type'], $searchBooks) !== false)||
-            stripos((((string)$book['origin_price']), $searchBooks) !== false)||
-            stripos(strtolower($searchBooks) === 'yes' && $book['avalibale'] == 1)||stripos(strtolower($searchBooks) === 'no' && $book['avalibale'] == 0))
-            {
+    stripos($book['title'], $searchBooks) !== false ||
+    stripos($book['category'], $searchBooks) !== false ||
+    stripos($book['book_type'], $searchBooks) !== false ||
+    stripos((string)$book['original_price'], $searchBooks) !== false ||
+    strtolower($searchBooks) === 'yes' && $book['available'] == 1||
+    strtolower($searchBooks) === 'no' && $book['available'] == 0) {
+            
             $filteredBooks[] = $book;
         }
     }
@@ -48,7 +53,10 @@ if (!empty($searchAuthors)) {
     foreach ($getAllAuthors as $author) {
         if (stripos($author['first_name'], $searchAuthors) !== false || 
             stripos($author['last_name'], $searchAuthors) !== false || 
-            stripos($author['country'], $searchAuthors) !== false) {
+            stripos($author['country'], $searchAuthors) !== false||
+             stripos($author['bio'], $searchAuthors) !== false)
+            
+            {
             $filteredAuthors[] = $author;
         }
     }
@@ -184,7 +192,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                 <button class="btn btn-outline-light nav-button" data-target="section-reports">Reports</button>
                 <button class="btn btn-outline-light nav-button" data-target="section-programmers">Programmer Info</button>
 
-                <button class="btn btn-danger mt-3" id="btn-logout">Log Out</button>
+                <button class="btn btn-danger mt-3" id="btn-logout" href="login.php">Log Out</button>
             </div>
 
             <div class="mt-auto pt-3 small text-secondary text-center">
@@ -1486,8 +1494,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     const allBorrowersTypes = <?php echo $getAllBorrowersTypes; ?>;
     const allLoanPeriods = <?php echo $getAllLoanPeriods; ?>;
     const allNotsoldBooks = <?php echo $getAllnotsoldBooks; ?>;
-    const username = <?php echo $username; ?>;
-    const role = <?php echo $role; ?>;
+   
 
     </script>
     <script>

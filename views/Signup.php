@@ -88,8 +88,9 @@
                     <label for="role" class="form-label">User Type</label>
                     <select class="form-select" id="role" required name="role">
                         <option value="" selected disabled>Select your user type</option>
-                        <option value="Admin">Admin</option>
-                        <option value="User">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                         <option value="staff">User</option>
                     </select>
                 </div>
                 
