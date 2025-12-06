@@ -5,13 +5,13 @@ require 'db.php';
 function getAuthorBookCounts($conn) {
     // Total number of books for each author
     // Check if book_author table exists, otherwise use direct relationship
-    $checkTable = mysqli_query($conn, "SHOW TABLES LIKE 'book_author'");
+    $checkTable = mysqli_query($conn, "SHOW TABLES LIKE 'bookauthor'");
     if (mysqli_num_rows($checkTable) > 0) {
         // Junction table exists
         $sql = "SELECT a.author_id, CONCAT(a.first_name, ' ', a.last_name) AS author_name, 
                 COUNT(DISTINCT ba.book_id) AS total_books
                 FROM author a
-                LEFT JOIN book_author ba ON a.author_id = ba.author_id
+                LEFT JOIN bookauthor ba ON a.author_id = ba.author_id
                 GROUP BY a.author_id, a.first_name, a.last_name
                 ORDER BY total_books DESC";
     } else {
@@ -19,9 +19,9 @@ function getAuthorBookCounts($conn) {
         $checkColumn = mysqli_query($conn, "SHOW COLUMNS FROM book LIKE 'author_id'");
         if (mysqli_num_rows($checkColumn) > 0) {
             $sql = "SELECT a.author_id, CONCAT(a.first_name, ' ', a.last_name) AS author_name, 
-                    COUNT(b.book_id) AS total_books
+                    COUNT(bk.book_id) AS total_books
                     FROM author a
-                    LEFT JOIN book b ON b.author_id = a.author_id
+                    LEFT JOIN bookauthor b ON b.author_id = a.author_id LEFT JOIN book bk ON bk.book_id=b.book_id
                     GROUP BY a.author_id, a.first_name, a.last_name
                     ORDER BY total_books DESC";
         } else {
@@ -45,13 +45,13 @@ function getAuthorBookCounts($conn) {
 
 function getAuthorSalesProfit($conn) {
     // Total sales/profit of books for each author
-    $checkTable = mysqli_query($conn, "SHOW TABLES LIKE 'book_author'");
+    $checkTable = mysqli_query($conn, "SHOW TABLES LIKE 'bookauthor'");
     if (mysqli_num_rows($checkTable) > 0) {
         $sql = "SELECT a.author_id, CONCAT(a.first_name, ' ', a.last_name) AS author_name,
                 COALESCE(SUM(s.sale_price), 0) AS total_sales,
                 COUNT(s.sale_id) AS total_sales_count
                 FROM author a
-                LEFT JOIN book_author ba ON a.author_id = ba.author_id
+                LEFT JOIN bookauthor ba ON a.author_id = ba.author_id
                 LEFT JOIN book b ON ba.book_id = b.book_id
                 LEFT JOIN sale s ON b.book_id = s.book_id
                 GROUP BY a.author_id, a.first_name, a.last_name
@@ -63,7 +63,8 @@ function getAuthorSalesProfit($conn) {
                     COALESCE(SUM(s.sale_price), 0) AS total_sales,
                     COUNT(s.sale_id) AS total_sales_count
                     FROM author a
-                    LEFT JOIN book b ON b.author_id = a.author_id
+                    LEFT JOIN bookauthor r ON r.author_id=a.author_id
+                    LEFT JOIN book b ON r.book_id = b.book_id
                     LEFT JOIN sale s ON b.book_id = s.book_id
                     GROUP BY a.author_id, a.first_name, a.last_name
                     ORDER BY total_sales DESC";
@@ -87,12 +88,12 @@ function getAuthorSalesProfit($conn) {
 
 function getAuthorBooksList($conn) {
     // List of all books written by each author
-    $checkTable = mysqli_query($conn, "SHOW TABLES LIKE 'book_author'");
+    $checkTable = mysqli_query($conn, "SHOW TABLES LIKE 'bookauthor'");
     if (mysqli_num_rows($checkTable) > 0) {
         $sql = "SELECT a.author_id, CONCAT(a.first_name, ' ', a.last_name) AS author_name,
                 b.book_id, b.title, b.category, b.original_price
                 FROM author a
-                LEFT JOIN book_author ba ON a.author_id = ba.author_id
+                LEFT JOIN bookauthor ba ON a.author_id = ba.author_id
                 LEFT JOIN book b ON ba.book_id = b.book_id
                 ORDER BY a.author_id, b.title";
     } else {

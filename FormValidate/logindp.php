@@ -21,27 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
-            
-            // Redirect based on user type (case-insensitive check)
             $userType = trim($user['role']);
-            if (strcasecmp($userType, 'Admin') === 0) {
-                header('Location: ../admin/index.php');
-            } else {
-                header('Location: ../user/index.php');
-            }
+                header('Location: ../views/index.php');
             exit();
         } else {
-            $_SESSION['error'] = "Invalid password.";
+            $_SESSION['error'] = "Invalid password Or userName";
             header('Location: ../views/login.php');
             exit();
         }
-    } else {
-        $_SESSION['error'] = "Invalid username.";
-        header('Location: ../views/login.php');
-        exit();
     }
 
     $stmt->close();

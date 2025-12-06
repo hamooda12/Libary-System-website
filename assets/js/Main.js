@@ -525,10 +525,10 @@ const tableBorrowers= document.getElementById('tableBorrowers');
                     <td><span class="loan_id">${l.loan_id}</span></td>
                     <td><span class="borrower_id">${l.borrower_id}</span></td>
                     <td><span class="book_id">${l.book_id}</span></td>
-                    <td><span class="period_id">${l.period_id}</span></td>
+                    <td><span class="period_id">${l.loanperiod_id}</span></td>
                     <td><span class="loan_date">${l.loan_date}</span></td>
                     <td><span class="due_date">${l.due_date}</span></td>
-                    <td><span class="return_date">${l.return_date}</span></td>
+                    <td><span class="return_date">${l.return_date ===null ? "Not yet" :l.return_date }</span></td>
                 `;
                 tbody.appendChild(tr);
             });

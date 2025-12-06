@@ -571,7 +571,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                                     <th>Last Name</th>
                                     <th>Type</th>
                                     <th>Contact Info</th>
-                                    <th class="admin-only">Actions</th>
+                            
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -653,7 +653,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                                     <th>Loan Date</th>
                                     <th>Due Date</th>
                                     <th>Return Date</th>
-                                    <th class="admin-only">Actions</th>
+                            
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -723,7 +723,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
                                     <th>Borrower</th>
                                     <th>Sale Date</th>
                                     <th>Sale Price</th>
-                                    <th class="admin-only">Actions</th>
+                        
                                 </tr>
                             </thead>
                             <tbody></tbody>
