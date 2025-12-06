@@ -29,12 +29,12 @@ $searchSales = isset($_POST['search_sales']) ? trim($_POST['search_sales']) : ''
 if (!empty($searchBooks)) {
     $filteredBooks = [];
     foreach ($getAllBooks as $book) {
-        if (stripos($book['title'], $searchBooks) !== false || 
+        if (
+            stripos($book['title'], $searchBooks) !== false
             stripos($book['category'], $searchBooks) !== false || 
             stripos($book['book_type'], $searchBooks) !== false)||
-            stripos(((string)$book['origin_price'], $searchBooks) !== false ||
-            strtolower($searchBooks) === 'yes' && $book['avalibale'] == 1
-                 ||strtolower($searchBooks) === 'no' && $book['avalibale'] == 0)
+            stripos((((string)$book['origin_price']), $searchBooks) !== false)||
+            stripos(strtolower($searchBooks) === 'yes' && $book['avalibale'] == 1)||stripos(strtolower($searchBooks) === 'no' && $book['avalibale'] == 0))
             {
             $filteredBooks[] = $book;
         }
