@@ -13,7 +13,8 @@ include '../includes/reports.php';
 // Store original data for building maps (needed for loans/sales search)
 $originalBooks = $getAllBooks;
 $originalBorrowers = $getAllBorrowers;
-
+$username=isset($_SESSION['username']) ? $_SESSION['username'] : '';
+$role=isset($_SESSION['role']) ? $_SESSION['role'] : '';
 // Handle search for each table
 $searchBooks = isset($_POST['search_books']) ? trim($_POST['search_books']) : '';
 $searchAuthors = isset($_POST['search_authors']) ? trim($_POST['search_authors']) : '';
@@ -256,7 +257,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
 
             <section id="section-dashboard" class="section-view active">
                 <h2 class="section-title">Dashboard Overview</h2>
-                <p id="welcomeUser" class="welcome-text mb-4"></p>
+                <p id="welcomeUser" class="welcome-text mb-4">welcome <?php $username ?></p>
 
                 <div class="row g-3 mb-4">
                     <div class="col-12 col-md-6 col-xl-3">
@@ -1479,6 +1480,9 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     const allBorrowersTypes = <?php echo $getAllBorrowersTypes; ?>;
     const allLoanPeriods = <?php echo $getAllLoanPeriods; ?>;
     const allNotsoldBooks = <?php echo $getAllnotsoldBooks; ?>;
+    const username = <?php echo $username; ?>;
+    const role = <?php echo $role; ?>;
+
     </script>
 <script src="../assets/js/Main.js"></script>
 </body>

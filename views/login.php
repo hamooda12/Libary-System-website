@@ -1,10 +1,14 @@
-<?php session_start(); ?>
+<?php session_start(); 
+
+$NotCorrectUser=isset($_SESSION['error']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
     <title>Login | YourApp</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,6 +17,14 @@
   
 </head>
 <body>
+<div id="overlayNotCorrectUser" class="overlay"></div>
+<div id="modalNotCorrectUser" class="modal">
+    <span id="closeModalNotCorrectUser" class="close">&times;</span>
+    <h2>Not Correct User</h2>
+    <p>Please try again. The UserName or Password is not correct. Recheck the UserName or Password.</p>
+    <button type="button" class="btn btn-primary mt-3" id="btnCancelNotCorrectUser">Cancel</button>
+    <button type="button" class="btn btn-danger mt-3" id="btnRetryNotCorrectUser">Retry</button>
+</div>
     <div class="login-container">
         <div class="login-header">
             <h2><i class="fas fa-lock me-2"></i>Welcome Back</h2>
@@ -84,7 +96,13 @@
             </div>
         </div>
     </div>
-
+    <script>
+        const NotCorrectUser = <?php echo $NotCorrectUser; ?>;
+        if(NotCorrectUser){
+            document.getElementById('overlayNotCorrectUser').style.display = 'block';
+            document.getElementById('modalNotCorrectUser').style.display = 'block';
+        }
+    </script>
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>

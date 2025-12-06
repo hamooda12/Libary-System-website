@@ -34,40 +34,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+   
     const currentRoleBadge = document.getElementById('currentRole');
-
-    function applyRole(role) {
-        if (currentRoleBadge) {
-            currentRoleBadge.textContent = role;
-        }
-
-        document.body.classList.remove('role-admin', 'role-staff', 'role-student');
-
-        if (role === 'admin' || role === 'staff' || role === 'student') {
-            document.body.classList.add('role-' + role);
-        } else {
-            document.body.classList.add('role-student');
-        }
+    if (currentRoleBadge) {
+        currentRoleBadge.textContent = role;
     }
+    
+    
 
-    let roleFromStorage = localStorage.getItem('userRole');
-    if (!roleFromStorage) {
-        roleFromStorage = 'admin';
-    }
-    applyRole(roleFromStorage);
+   
 
-    let userName = localStorage.getItem('userName') || 'User';
-    const welcomeUser = document.getElementById('welcomeUser');
-    if (welcomeUser) {
-        welcomeUser.textContent = 'Hi ' + userName;
-    }
+
 
     const logoutBtn = document.getElementById('btn-logout');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function () {
-            localStorage.removeItem('userRole');
-            localStorage.removeItem('userName');
-            window.location.href = 'login.html';
+                window.location.href = '../views/login.php';
+                session_destroy();
         });
     }
 

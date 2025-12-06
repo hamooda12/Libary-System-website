@@ -10,3 +10,19 @@ for (let i = 0; i < togglePassword.length; i++) {
         }       
     });
 }
+const btnCancelNotCorrectUser = document.getElementById('btnCancelNotCorrectUser');
+if (btnCancelNotCorrectUser) {
+    btnCancelNotCorrectUser.addEventListener('click', function () {
+        document.getElementById('overlayNotCorrectUser').style.display = 'none';
+        document.getElementById('modalNotCorrectUser').style.display = 'none';
+    });
+}
+const btnRetryNotCorrectUser = document.getElementById('btnRetryNotCorrectUser');
+if (btnRetryNotCorrectUser) {
+    btnRetryNotCorrectUser.addEventListener('click', function () {
+        document.getElementById('overlayNotCorrectUser').style.display = 'none';
+        document.getElementById('modalNotCorrectUser').style.display = 'none';
+        window.location.href = '../views/login.php';
+        session_destroy();
+    });
+}       
