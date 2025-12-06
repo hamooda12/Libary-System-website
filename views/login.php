@@ -17,14 +17,7 @@ $NotCorrectUser=isset($_SESSION['error']);
   
 </head>
 <body>
-<div id="overlayNotCorrectUser" class="overlay"></div>
-<div id="modalNotCorrectUser" class="modal">
-    <span id="closeModalNotCorrectUser" class="close">&times;</span>
-    <h2>Not Correct User</h2>
-    <p>Please try again. The UserName or Password is not correct. Recheck the UserName or Password.</p>
-    <button type="button" class="btn btn-primary mt-3" id="btnCancelNotCorrectUser">Cancel</button>
-    <button type="button" class="btn btn-danger mt-3" id="btnRetryNotCorrectUser">Retry</button>
-</div>
+
     <div class="login-container">
         <div class="login-header">
             <h2><i class="fas fa-lock me-2"></i>Welcome Back</h2>
@@ -32,19 +25,6 @@ $NotCorrectUser=isset($_SESSION['error']);
         </div>
         
         <div class="login-body">
-            <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger" role="alert">
-                <i class="fas fa-exclamation-circle me-2"></i>
-                <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
-            </div>
-            <?php endif; ?>
-            
-            <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success" role="alert">
-                <i class="fas fa-check-circle me-2"></i>
-                <?php echo htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
-            </div>
-            <?php endif; ?>
             
             <form id="loginForm" action="../FormValidate/logindp.php" method="post">
                 <div class="form-floating">
@@ -66,7 +46,11 @@ $NotCorrectUser=isset($_SESSION['error']);
                         Remember me
                     </label>
                 </div>
-                <p class="error"></p>
+
+                <p class="error">
+
+
+                </p>
                 <button type="submit" class="btn btn-login" id="loginBtn">
                     <i class="fas fa-sign-in-alt me-2"></i>Log In
                 </button>
@@ -98,10 +82,6 @@ $NotCorrectUser=isset($_SESSION['error']);
     </div>
     <script>
         const NotCorrectUser = <?php echo $NotCorrectUser; ?>;
-        if(NotCorrectUser){
-            document.getElementById('overlayNotCorrectUser').style.display = 'block';
-            document.getElementById('modalNotCorrectUser').style.display = 'block';
-        }
     </script>
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

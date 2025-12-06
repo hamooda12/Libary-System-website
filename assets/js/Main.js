@@ -35,13 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
    
-    const currentRoleBadge = document.getElementById('currentRole');
-    if (currentRoleBadge) {
-        currentRoleBadge.textContent = role;
-    }
-    
-    
-
+ 
    
 
 

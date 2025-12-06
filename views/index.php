@@ -9,12 +9,13 @@ include '../classes/borrowertype.php';
 include '../classes/loanperiod.php';
 include '../includes/helper.php';
 include '../includes/reports.php';
-
-// Store original data for building maps (needed for loans/sales search)
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $originalBooks = $getAllBooks;
 $originalBorrowers = $getAllBorrowers;
-$username=isset($_SESSION['username']) ? $_SESSION['username'] : '';
-$role=isset($_SESSION['role']) ? $_SESSION['role'] : '';
+$username=isset($_SESSION['username']) ? $_SESSION['username'] : 'user';
+$role=isset($_SESSION['role']) ? $_SESSION['role'] : 'admin';
 // Handle search for each table
 $searchBooks = isset($_POST['search_books']) ? trim($_POST['search_books']) : '';
 $searchAuthors = isset($_POST['search_authors']) ? trim($_POST['search_authors']) : '';
@@ -161,7 +162,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
             <div class="mt-3 mb-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <span>Current Role:</span>
-                    <span class="badge bg-primary role-badge" id="currentRole">-</span>
+                    <span class="badge bg-primary role-badge" id="currentRole"><?php echo $role?></span>
                 </div>
             </div>
 
@@ -257,7 +258,7 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
 
             <section id="section-dashboard" class="section-view active">
                 <h2 class="section-title">Dashboard Overview</h2>
-                <p id="welcomeUser" class="welcome-text mb-4">welcome <?php $username ?></p>
+                <p id="welcomeUser" class="welcome-text mb-4">welcome <?php echo $username ?></p>
 
                 <div class="row g-3 mb-4">
                     <div class="col-12 col-md-6 col-xl-3">
