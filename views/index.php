@@ -1485,6 +1485,36 @@ $getAllnotsoldBooks = JSON_ENCODE(getNotsoldBooks($conn));
     const role = <?php echo $role; ?>;
 
     </script>
+    <script>
+// Display modal if foreign key or publisher error
+document.addEventListener('DOMContentLoaded', function () {
+    // Check for foreign key error in query string
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('foreign_key_error')) {
+        const fkModal = document.getElementById('forginkey');
+        if (fkModal) {
+            fkModal.style.display = 'block';
+            // Optional: Close modal handler
+            document.getElementById('closePforginkey').onclick = function () {
+                fkModal.style.display = 'none';
+                // Remove query string from URL
+                window.location.search = '';
+            };
+        }
+    }
+    // Check for publisher error in query string
+    if (urlParams.has('publisher_error')) {
+        const publisherModal = document.getElementById('publisherModel');
+        if (publisherModal) {
+            publisherModal.style.display = 'block';
+            document.getElementById('closePublisherModal').onclick = function () {
+                publisherModal.style.display = 'none';
+                window.location.search = '';
+            };
+        }
+    }
+});
+</script>
 <script src="../assets/js/Main.js"></script>
 </body>
     
